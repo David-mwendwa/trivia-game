@@ -42,7 +42,7 @@ function GameScreen({ playerName, onGameEnd }) {
 
   const getButtonClass = (index) => {
     const baseClass =
-      'w-full p-4 rounded-xl text-left font-semibold transition-all duration-300 transform hover:scale-105';
+      'w-full p-4 rounded-lg text-left font-semibold transition-all duration-300 transform hover:scale-105';
 
     if (!showResult) {
       return `${baseClass} bg-white border-2 border-purple-300 hover:border-purple-500 hover:shadow-lg text-gray-800`;
@@ -60,7 +60,7 @@ function GameScreen({ playerName, onGameEnd }) {
   };
 
   return (
-    <div className='bg-white rounded-3xl shadow-2xl p-6 md:p-10'>
+    <div className='bg-white rounded-lg shadow-2xl p-6 md:p-10'>
       {/* Header */}
       <div className='mb-6'>
         <div className='flex justify-between items-center mb-4'>
@@ -90,7 +90,7 @@ function GameScreen({ playerName, onGameEnd }) {
 
       {/* Category Badge */}
       <div className='mb-6'>
-        <span className='inline-block px-4 py-2 bg-gradient-to-r from-kenya-green/20 to-kenya-red/20 text-kenya-black border-2 border-kenya-green rounded-full text-sm font-bold shadow-sm'>
+        <span className='inline-block px-4 py-2 bg-gradient-to-r from-kenya-green/20 to-kenya-red/20 text-kenya-black border-2 border-kenya-green rounded-md text-sm font-bold shadow-sm'>
           📚 {currentQuestion.category}
         </span>
       </div>

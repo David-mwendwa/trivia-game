@@ -37,7 +37,7 @@ function HighScores() {
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-8 mt-8 animate-slide-up">
+    <div className="bg-white rounded-lg shadow-2xl p-6 md:p-8 mt-8 animate-slide-up">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-kenya-red via-kenya-black to-kenya-green">
           🏆 High Scores
@@ -55,7 +55,7 @@ function HighScores() {
         {highScores.map((score, index) => (
           <div
             key={index}
-            className={`flex items-center justify-between p-4 rounded-xl transition-all hover:scale-102 ${
+            className={`flex items-center justify-between p-4 rounded-lg transition-all hover:scale-102 ${
               index === 0
                 ? 'bg-gradient-to-r from-yellow-50 to-yellow-100 border-2 border-yellow-400 shadow-md'
                 : index === 1

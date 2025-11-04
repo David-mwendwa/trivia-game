@@ -41,7 +41,7 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
   const performance = getPerformanceMessage()
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 transform animate-bounce-subtle">
+    <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 transform animate-bounce-subtle">
       <div className="text-center">
         {/* Trophy Icon */}
         <div className="flex justify-center mb-6">
@@ -60,7 +60,7 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
         </p>
 
         {/* Score Display */}
-        <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green rounded-2xl p-8 mb-8">
+        <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green rounded-lg p-8 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col items-center">
               <Star className="w-8 h-8 text-kenya-red mb-2" />
@@ -85,7 +85,7 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
         </div>
 
         {/* Fun Facts */}
-        <div className="bg-kenya-green/10 border-2 border-kenya-green rounded-xl p-4 mb-8">
+        <div className="bg-kenya-green/10 border-2 border-kenya-green rounded-lg p-4 mb-8">
           <p className="text-sm text-kenya-black font-semibold">
             💡 <strong>Did you know?</strong> You answered {score} questions correctly about Kenya! 
             {percentage === 100 && " You're a true Kenya Expert! 🎓🇰🇪"}
@@ -97,7 +97,7 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
         <div className="space-y-4">
           <button
             onClick={onRestart}
-            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-xl font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-3"
+            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-lg font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-3"
           >
             <RotateCcw className="w-6 h-6" />
             Play Again

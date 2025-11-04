@@ -70,7 +70,7 @@ function LoginScreen({ onLoginSuccess }) {
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 animate-slide-up">
+    <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 animate-slide-up">
       <div className="text-center mb-8">
         {/* Kenya Flag Representation */}
         <div className="mb-6 mx-auto w-32 h-20 rounded-lg overflow-hidden shadow-lg border-2 border-gray-200">
@@ -107,7 +107,7 @@ function LoginScreen({ onLoginSuccess }) {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Enter your full name"
-              className="w-full px-4 py-3 border-2 border-kenya-green rounded-xl focus:outline-none focus:border-kenya-red focus:ring-2 focus:ring-kenya-green/20 transition-all"
+              className="w-full px-4 py-3 border-2 border-kenya-green rounded-lg focus:outline-none focus:border-kenya-red focus:ring-2 focus:ring-kenya-green/20 transition-all"
               required={!isLogin}
             />
           </div>
@@ -125,7 +125,7 @@ function LoginScreen({ onLoginSuccess }) {
             value={formData.email}
             onChange={handleInputChange}
             placeholder="Enter your email"
-            className="w-full px-4 py-3 border-2 border-kenya-green rounded-xl focus:outline-none focus:border-kenya-red focus:ring-2 focus:ring-kenya-green/20 transition-all"
+            className="w-full px-4 py-3 border-2 border-kenya-green rounded-lg focus:outline-none focus:border-kenya-red focus:ring-2 focus:ring-kenya-green/20 transition-all"
             required
           />
         </div>
@@ -142,7 +142,7 @@ function LoginScreen({ onLoginSuccess }) {
             value={formData.password}
             onChange={handleInputChange}
             placeholder="Enter your password"
-            className="w-full px-4 py-3 border-2 border-kenya-green rounded-xl focus:outline-none focus:border-kenya-red focus:ring-2 focus:ring-kenya-green/20 transition-all"
+            className="w-full px-4 py-3 border-2 border-kenya-green rounded-lg focus:outline-none focus:border-kenya-red focus:ring-2 focus:ring-kenya-green/20 transition-all"
             required
             minLength={isLogin ? 1 : 6}
           />
@@ -152,20 +152,20 @@ function LoginScreen({ onLoginSuccess }) {
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-100 border-2 border-red-400 text-red-700 rounded-xl text-sm font-semibold">
+          <div className="mb-4 p-3 bg-red-100 border-2 border-red-400 text-red-700 rounded-lg text-sm font-semibold">
             ⚠️ {error}
           </div>
         )}
 
         {success && (
-          <div className="mb-4 p-3 bg-green-100 border-2 border-green-400 text-green-700 rounded-xl text-sm font-semibold">
+          <div className="mb-4 p-3 bg-green-100 border-2 border-green-400 text-green-700 rounded-lg text-sm font-semibold">
             ✅ {success}
           </div>
         )}
 
         <button
           type="submit"
-          className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-xl font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-3"
+          className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-lg font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl flex items-center justify-center gap-3"
         >
           {isLogin ? (
             <>
@@ -199,7 +199,7 @@ function LoginScreen({ onLoginSuccess }) {
       </div>
 
       <div className="mt-6 text-center">
-        <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green/30 rounded-xl p-4">
+        <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green/30 rounded-lg p-4">
           <p className="text-xs text-kenya-black font-semibold">
             🔒 Your data is stored securely on your device
           </p>

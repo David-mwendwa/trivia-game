@@ -118,7 +118,7 @@ function StartScreen({ onStart, currentUser, onLogout }) {
           </div>
           <button
             onClick={handleStartGame}
-            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-xl font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-lg font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
           >
             Start Game 🎮
           </button>
@@ -144,7 +144,7 @@ function StartScreen({ onStart, currentUser, onLogout }) {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-xl font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-lg font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
           >
             Start Game 🎮
           </button>
