@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Clock, CheckCircle, XCircle, Timer } from 'lucide-react';
 import questionsData from '../data/questions.json';
 
-function GameScreen({ playerName, onGameEnd }) {
+function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = null }) {
   const [questions] = useState(() => {
     // Shuffle questions for variety
     return [...questionsData].sort(() => Math.random() - 0.5);
@@ -12,9 +12,48 @@ function GameScreen({ playerName, onGameEnd }) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showResult, setShowResult] = useState(false);
   const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(timeLimit);
+  const [timeBonus, setTimeBonus] = useState(0);
 
   const currentQuestion = questions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+
+  // Timer effect
+  useEffect(() => {
+    if (!timeLimit || showResult) return;
+
+    setTimeRemaining(timeLimit);
+    const timer = setInterval(() => {
+      setTimeRemaining((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleTimeout();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [currentQuestionIndex, showResult]);
+
+  const handleTimeout = () => {
+    if (showResult) return;
+    setSelectedAnswer(null);
+    setAnsweredCorrectly(false);
+    setShowResult(true);
+    setTimeBonus(0);
+  };
+
+  const calculateTimeBonus = (timeLeft) => {
+    if (!timeLimit) return 0;
+    // Award bonus points based on time remaining
+    const percentageLeft = (timeLeft / timeLimit) * 100;
+    if (percentageLeft >= 75) return 3; // Very fast
+    if (percentageLeft >= 50) return 2; // Fast
+    if (percentageLeft >= 25) return 1; // Moderate
+    return 0;
+  };
 
   const handleAnswerClick = (answerIndex) => {
     if (showResult) return; // Prevent multiple clicks
@@ -25,7 +64,11 @@ function GameScreen({ playerName, onGameEnd }) {
     setShowResult(true);
 
     if (isCorrect) {
-      setScore(score + 1);
+      const bonus = calculateTimeBonus(timeRemaining);
+      setTimeBonus(bonus);
+      setScore(score + 1 + bonus);
+    } else {
+      setTimeBonus(0);
     }
   };
 
@@ -35,8 +78,10 @@ function GameScreen({ playerName, onGameEnd }) {
       setSelectedAnswer(null);
       setShowResult(false);
       setAnsweredCorrectly(false);
+      setTimeBonus(0);
     } else {
-      onGameEnd(score + (answeredCorrectly ? 1 : 0), questions.length);
+      const finalScore = answeredCorrectly ? score : score;
+      onGameEnd(finalScore, questions.length);
     }
   };
 
@@ -68,10 +113,25 @@ function GameScreen({ playerName, onGameEnd }) {
             <p className='text-sm text-gray-600'>Player</p>
             <p className='text-xl font-bold text-kenya-red'>{playerName}</p>
           </div>
+          
+          {/* Timer Display */}
+          {timeLimit && (
+            <div className='text-center'>
+              <p className='text-sm text-gray-600'>Time Left</p>
+              <div className={`flex items-center gap-2 text-2xl font-bold ${
+                timeRemaining <= 5 ? 'text-red-600 animate-pulse' : 
+                timeRemaining <= 10 ? 'text-orange-500' : 'text-kenya-green'
+              }`}>
+                <Timer className='w-6 h-6' />
+                {timeRemaining}s
+              </div>
+            </div>
+          )}
+          
           <div className='text-right'>
             <p className='text-sm text-gray-600'>Score</p>
             <p className='text-2xl font-bold text-kenya-green'>
-              {score} / {questions.length}
+              {score}
             </p>
           </div>
         </div>
@@ -128,19 +188,29 @@ function GameScreen({ playerName, onGameEnd }) {
       {/* Result Feedback */}
       {showResult && (
         <div
-          className={`p-4 rounded-xl mb-6 ${
+          className={`p-4 rounded-lg mb-6 ${
             answeredCorrectly
               ? 'bg-green-100 border-2 border-green-500'
+              : selectedAnswer === null
+              ? 'bg-orange-100 border-2 border-orange-500'
               : 'bg-red-100 border-2 border-red-500'
           }`}>
           <p
             className={`text-center font-bold text-lg ${
-              answeredCorrectly ? 'text-green-700' : 'text-red-700'
+              answeredCorrectly ? 'text-green-700' : 
+              selectedAnswer === null ? 'text-orange-700' : 'text-red-700'
             }`}>
             {answeredCorrectly
-              ? '🎉 Correct! Well done!'
+              ? `🎉 Correct! ${timeBonus > 0 ? `+${timeBonus} Time Bonus!` : 'Well done!'}`
+              : selectedAnswer === null
+              ? '⏰ Time\'s up! No answer selected.'
               : '❌ Incorrect! Better luck next time!'}
           </p>
+          {answeredCorrectly && timeBonus > 0 && (
+            <p className='text-center text-sm text-green-600 mt-2 font-semibold'>
+              ⚡ Lightning fast! Earned {timeBonus} bonus point{timeBonus > 1 ? 's' : ''}!
+            </p>
+          )}
         </div>
       )}
 
@@ -148,7 +218,7 @@ function GameScreen({ playerName, onGameEnd }) {
       {showResult && (
         <button
           onClick={handleNextQuestion}
-          className='w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-xl font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl'>
+          className='w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-lg font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl'>
           {currentQuestionIndex < questions.length - 1
             ? 'Next Question ➡️'
             : 'See Results 🏆'}

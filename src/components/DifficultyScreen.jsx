@@ -1,0 +1,110 @@
+import { Zap, Clock, Flame, Trophy } from 'lucide-react'
+
+function DifficultyScreen({ onSelectDifficulty, playerName }) {
+  const difficulties = [
+    {
+      id: 'casual',
+      name: 'Casual Mode',
+      icon: Trophy,
+      description: 'No time limit - Take your time to think',
+      timeLimit: null,
+      color: 'from-blue-500 to-blue-600',
+      borderColor: 'border-blue-500',
+      bgColor: 'from-blue-50 to-blue-100',
+      features: ['No Timer', 'Perfect for Learning', 'No Pressure']
+    },
+    {
+      id: 'challenge',
+      name: 'Challenge Mode',
+      icon: Clock,
+      description: '20 seconds per question',
+      timeLimit: 20,
+      color: 'from-kenya-green to-green-600',
+      borderColor: 'border-kenya-green',
+      bgColor: 'from-kenya-green/10 to-green-100',
+      features: ['20s Timer', 'Time Bonus Points', 'Moderate Difficulty']
+    },
+    {
+      id: 'blitz',
+      name: 'Blitz Mode',
+      icon: Flame,
+      description: '10 seconds per question - Lightning fast!',
+      timeLimit: 10,
+      color: 'from-kenya-red to-red-600',
+      borderColor: 'border-kenya-red',
+      bgColor: 'from-kenya-red/10 to-red-100',
+      features: ['10s Timer', 'Maximum Time Bonus', 'Expert Level']
+    }
+  ]
+
+  return (
+    <div className="bg-white rounded-lg shadow-2xl p-8 md:p-12 animate-slide-up">
+      <div className="text-center mb-8">
+        <div className="flex justify-center mb-4">
+          <Zap className="w-16 h-16 text-yellow-500 animate-pulse" />
+        </div>
+        
+        <h1 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-kenya-red via-kenya-black to-kenya-green mb-4">
+          Choose Your Difficulty
+        </h1>
+        
+        <p className="text-xl text-gray-600 mb-2">
+          Ready, <span className="font-bold text-kenya-green">{playerName}</span>?
+        </p>
+        
+        <p className="text-sm text-gray-500">
+          Select your preferred game mode
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {difficulties.map((difficulty) => {
+          const Icon = difficulty.icon
+          return (
+            <button
+              key={difficulty.id}
+              onClick={() => onSelectDifficulty(difficulty.id, difficulty.timeLimit)}
+              className={`bg-gradient-to-br ${difficulty.bgColor} border-2 ${difficulty.borderColor} rounded-lg p-6 hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-2xl text-left`}
+            >
+              <div className="flex flex-col items-center text-center">
+                <div className={`w-16 h-16 bg-gradient-to-br ${difficulty.color} rounded-full flex items-center justify-center mb-4 shadow-lg`}>
+                  <Icon className="w-8 h-8 text-white" />
+                </div>
+                
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">
+                  {difficulty.name}
+                </h3>
+                
+                <p className="text-sm text-gray-600 mb-4 font-semibold">
+                  {difficulty.description}
+                </p>
+                
+                <div className="space-y-2 w-full">
+                  {difficulty.features.map((feature, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-center gap-2 text-xs font-semibold text-gray-700"
+                    >
+                      <span className="w-1.5 h-1.5 bg-kenya-green rounded-full"></span>
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </button>
+          )
+        })}
+      </div>
+
+      <div className="mt-8 text-center">
+        <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green/30 rounded-lg p-4 max-w-2xl mx-auto">
+          <p className="text-sm text-kenya-black font-semibold">
+            💡 <strong>Tip:</strong> Challenge and Blitz modes award bonus points for quick correct answers!
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default DifficultyScreen

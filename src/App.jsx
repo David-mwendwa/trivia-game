@@ -4,14 +4,17 @@ import GameScreen from './components/GameScreen'
 import ResultsScreen from './components/ResultsScreen'
 import HighScores from './components/HighScores'
 import LoginScreen from './components/LoginScreen'
+import DifficultyScreen from './components/DifficultyScreen'
 import { getCurrentUser, clearCurrentUser, updateUserStats } from './utils/userManager'
 
 function App() {
-  const [gameState, setGameState] = useState('login') // 'login', 'start', 'playing', 'results'
+  const [gameState, setGameState] = useState('login') // 'login', 'start', 'difficulty', 'playing', 'results'
   const [currentUser, setCurrentUser] = useState(null)
   const [playerName, setPlayerName] = useState('')
   const [score, setScore] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
+  const [difficulty, setDifficulty] = useState('casual')
+  const [timeLimit, setTimeLimit] = useState(null)
 
   // Check if user is already logged in on mount
   useEffect(() => {
@@ -40,6 +43,12 @@ function App() {
 
   const startGame = (name) => {
     setPlayerName(name)
+    setGameState('difficulty')
+  }
+
+  const handleDifficultySelect = (selectedDifficulty, selectedTimeLimit) => {
+    setDifficulty(selectedDifficulty)
+    setTimeLimit(selectedTimeLimit)
     setGameState('playing')
     setScore(0)
     setTotalQuestions(0)
@@ -62,10 +71,9 @@ function App() {
   }
 
   const restartGame = () => {
-    setGameState('start')
+    setGameState('difficulty')
     setScore(0)
     setTotalQuestions(0)
-    setPlayerName('')
   }
 
   return (
@@ -79,10 +87,18 @@ function App() {
             onLogout={handleLogout}
           />
         )}
+        {gameState === 'difficulty' && (
+          <DifficultyScreen
+            playerName={playerName}
+            onSelectDifficulty={handleDifficultySelect}
+          />
+        )}
         {gameState === 'playing' && (
           <GameScreen 
             playerName={playerName} 
             onGameEnd={endGame}
+            difficulty={difficulty}
+            timeLimit={timeLimit}
           />
         )}
         {gameState === 'results' && (
