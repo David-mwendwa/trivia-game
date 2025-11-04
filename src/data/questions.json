@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "question": "What is the capital city of Kenya?",
+    "options": ["Mombasa", "Nairobi", "Kisumu", "Nakuru"],
+    "correctAnswer": 1,
+    "category": "Geography"
+  },
+  {
+    "id": 2,
+    "question": "In which year did Kenya gain independence?",
+    "options": ["1960", "1961", "1963", "1964"],
+    "correctAnswer": 2,
+    "category": "History"
+  },
+  {
+    "id": 3,
+    "question": "What is the highest mountain in Kenya?",
+    "options": ["Mount Kilimanjaro", "Mount Kenya", "Mount Elgon", "Aberdare Range"],
+    "correctAnswer": 1,
+    "category": "Geography"
+  },
+  {
+    "id": 4,
+    "question": "Who was Kenya's first president?",
+    "options": ["Daniel arap Moi", "Jomo Kenyatta", "Mwai Kibaki", "Uhuru Kenyatta"],
+    "correctAnswer": 1,
+    "category": "History"
+  },
+  {
+    "id": 5,
+    "question": "What is Kenya's national language alongside English?",
+    "options": ["Kikuyu", "Luo", "Swahili", "Kalenjin"],
+    "correctAnswer": 2,
+    "category": "Culture"
+  },
+  {
+    "id": 6,
+    "question": "Which Kenyan athlete is known as the 'World's fastest man' in marathon?",
+    "options": ["David Rudisha", "Eliud Kipchoge", "Ezekiel Kemboi", "Julius Yego"],
+    "correctAnswer": 1,
+    "category": "Sports"
+  },
+  {
+    "id": 7,
+    "question": "What is the currency of Kenya?",
+    "options": ["Kenyan Dollar", "Kenyan Pound", "Kenyan Shilling", "Kenyan Rand"],
+    "correctAnswer": 2,
+    "category": "Economy"
+  },
+  {
+    "id": 8,
+    "question": "Which famous wildlife reserve is located in Kenya?",
+    "options": ["Serengeti", "Maasai Mara", "Kruger", "Okavango"],
+    "correctAnswer": 1,
+    "category": "Wildlife"
+  },
+  {
+    "id": 9,
+    "question": "What are the colors of the Kenyan flag?",
+    "options": ["Red, Blue, White", "Black, Red, Green, White", "Green, Yellow, Red", "Blue, White, Red"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  },
+  {
+    "id": 10,
+    "question": "Which ocean borders Kenya to the east?",
+    "options": ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"],
+    "correctAnswer": 1,
+    "category": "Geography"
+  },
+  {
+    "id": 11,
+    "question": "What is Kenya's national animal?",
+    "options": ["Elephant", "Giraffe", "Lion", "Leopard"],
+    "correctAnswer": 2,
+    "category": "Wildlife"
+  },
+  {
+    "id": 12,
+    "question": "Which Kenyan city is known as the 'White Highlands'?",
+    "options": ["Nairobi", "Nakuru", "Eldoret", "Nyeri"],
+    "correctAnswer": 1,
+    "category": "Geography"
+  },
+  {
+    "id": 13,
+    "question": "Who wrote the famous book 'Weep Not, Child'?",
+    "options": ["Chinua Achebe", "Ngugi wa Thiong'o", "Wole Soyinka", "Grace Ogot"],
+    "correctAnswer": 1,
+    "category": "Literature"
+  },
+  {
+    "id": 14,
+    "question": "What is the Great Rift Valley known for in Kenya?",
+    "options": ["Mining", "Lakes and volcanic activity", "Desert landscape", "Rainforests"],
+    "correctAnswer": 1,
+    "category": "Geography"
+  },
+  {
+    "id": 15,
+    "question": "Which port city is the second largest in Kenya?",
+    "options": ["Lamu", "Malindi", "Mombasa", "Kilifi"],
+    "correctAnswer": 2,
+    "category": "Geography"
+  },
+  {
+    "id": 16,
+    "question": "What is the traditional Maasai warrior dance called?",
+    "options": ["Adumu", "Chakacha", "Mugithi", "Ohangla"],
+    "correctAnswer": 0,
+    "category": "Culture"
+  },
+  {
+    "id": 17,
+    "question": "Which Kenyan won the Nobel Peace Prize in 2004?",
+    "options": ["Kofi Annan", "Wangari Maathai", "Nelson Mandela", "Desmond Tutu"],
+    "correctAnswer": 1,
+    "category": "History"
+  },
+  {
+    "id": 18,
+    "question": "What is Kenya's famous tea-growing region?",
+    "options": ["Kericho", "Narok", "Machakos", "Garissa"],
+    "correctAnswer": 0,
+    "category": "Economy"
+  },
+  {
+    "id": 19,
+    "question": "Which lake in Kenya is known for its flamingos?",
+    "options": ["Lake Victoria", "Lake Turkana", "Lake Nakuru", "Lake Naivasha"],
+    "correctAnswer": 2,
+    "category": "Wildlife"
+  },
+  {
+    "id": 20,
+    "question": "What is the popular Kenyan dish made from maize meal?",
+    "options": ["Chapati", "Ugali", "Pilau", "Mandazi"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  }
+]
