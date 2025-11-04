@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Trophy, MapPin, Flag } from 'lucide-react'
+import { Trophy, MapPin, Flag, LogOut, User, Award, Target } from 'lucide-react'
 
-function StartScreen({ onStart }) {
+function StartScreen({ onStart, currentUser, onLogout }) {
   const [name, setName] = useState('')
 
   const handleSubmit = (e) => {
@@ -12,7 +12,52 @@ function StartScreen({ onStart }) {
   }
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8 animate-slide-up">
+    <>
+      {/* User Profile Card */}
+      {currentUser && (
+        <div className="bg-white rounded-3xl shadow-2xl p-6 mb-6 animate-slide-up">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-kenya-red to-kenya-green rounded-full flex items-center justify-center">
+                <User className="w-8 h-8 text-white" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-kenya-black">{currentUser.name}</h2>
+                <p className="text-sm text-gray-600">{currentUser.email}</p>
+              </div>
+            </div>
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-kenya-red text-white rounded-xl font-semibold hover:bg-kenya-red/80 transition-all"
+              title="Logout"
+            >
+              <LogOut className="w-5 h-5" />
+              Logout
+            </button>
+          </div>
+          
+          {/* User Stats */}
+          <div className="grid grid-cols-3 gap-4 mt-6">
+            <div className="bg-gradient-to-br from-kenya-green/10 to-kenya-green/20 border-2 border-kenya-green rounded-xl p-4 text-center">
+              <Target className="w-6 h-6 text-kenya-green mx-auto mb-2" />
+              <p className="text-2xl font-bold text-kenya-green">{currentUser.gamesPlayed}</p>
+              <p className="text-xs text-gray-600 font-semibold">Games Played</p>
+            </div>
+            <div className="bg-gradient-to-br from-kenya-red/10 to-kenya-red/20 border-2 border-kenya-red rounded-xl p-4 text-center">
+              <Trophy className="w-6 h-6 text-kenya-red mx-auto mb-2" />
+              <p className="text-2xl font-bold text-kenya-red">{currentUser.highestScore}</p>
+              <p className="text-xs text-gray-600 font-semibold">Highest Score</p>
+            </div>
+            <div className="bg-gradient-to-br from-yellow-500/10 to-yellow-500/20 border-2 border-yellow-500 rounded-xl p-4 text-center">
+              <Award className="w-6 h-6 text-yellow-600 mx-auto mb-2" />
+              <p className="text-2xl font-bold text-yellow-600">{currentUser.totalScore}</p>
+              <p className="text-xs text-gray-600 font-semibold">Total Score</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8 animate-slide-up">
       <div className="text-center mb-8">
         {/* Kenya Flag Representation */}
         <div className="mb-6 mx-auto w-32 h-20 rounded-lg overflow-hidden shadow-lg border-2 border-gray-200">
@@ -77,6 +122,14 @@ function StartScreen({ onStart }) {
         </button>
       </form>
 
+      {currentUser && (
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">
+            Playing as <span className="font-bold text-kenya-green">{currentUser.name}</span>
+          </p>
+        </div>
+      )}
+
       <div className="mt-8 text-center">
         <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green/30 rounded-xl p-4">
           <p className="text-sm text-kenya-black font-semibold">
@@ -88,6 +141,7 @@ function StartScreen({ onStart }) {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
