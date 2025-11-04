@@ -2,6 +2,10 @@
 
 Jambo! A fun and interactive trivia game built with React and Vite! Test your knowledge about Kenya across multiple categories including Geography, History, Culture, Wildlife, Sports, and Economy.
 
+## 🌐 Live Demo
+
+**Play the game here:** [https://david-mwendwa.github.io/trivia-game/](https://david-mwendwa.github.io/trivia-game/)
+
 ## ✨ Features
 
 - **20 Kenya-Themed Questions** across multiple categories
