@@ -102,11 +102,11 @@ function HighScores() {
             key={index}
             className={`flex flex-col sm:flex-row items-center justify-between p-3 sm:p-4 rounded-lg transition-all hover:scale-102 gap-2 sm:gap-0 ${
               index === 0
-                ? 'bg-gradient-to-r from-yellow-50 to-yellow-100 border-2 border-yellow-400 shadow-md'
+                ? 'bg-gradient-to-r from-yellow-100 to-amber-200 border-2 border-yellow-500 shadow-lg'
                 : index === 1
-                ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-400 shadow-md'
+                ? 'bg-gradient-to-r from-slate-200 to-zinc-300 border-2 border-slate-500 shadow-lg'
                 : index === 2
-                ? 'bg-gradient-to-r from-orange-50 to-orange-100 border-2 border-orange-400 shadow-md'
+                ? 'bg-gradient-to-r from-orange-100 to-amber-200 border-2 border-orange-500 shadow-lg'
                 : 'bg-gradient-to-r from-kenya-green/5 to-kenya-red/5 border-2 border-kenya-green/30'
             }`}
           >
