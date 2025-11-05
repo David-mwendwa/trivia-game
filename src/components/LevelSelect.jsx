@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Trophy, Lock, Star, ChevronRight, RotateCcw, Award } from 'lucide-react'
+import { Trophy, Lock, Star, ChevronRight, RotateCcw, Award, Target } from 'lucide-react'
 import { getLevelsWithProgress, getTotalStats, resetAllProgress } from '../utils/levelSystem'
 
 function LevelSelect({ onLevelSelect, onBack }) {
@@ -27,7 +27,7 @@ function LevelSelect({ onLevelSelect, onBack }) {
   const renderStars = (stars) => {
     return (
       <div className="flex gap-0.5">
-        {[1, 2, 3].map((i) => (
+        {[1, 2, 3, 4, 5].map((i) => (
           <Star
             key={i}
             className={`w-4 h-4 ${
@@ -43,9 +43,11 @@ function LevelSelect({ onLevelSelect, onBack }) {
 
   const getLevelColor = (level) => {
     if (level.isLocked) return 'bg-gray-100 border-gray-300'
-    if (level.stars === 3) return 'bg-gradient-to-br from-yellow-50 to-amber-100 border-yellow-400'
-    if (level.stars === 2) return 'bg-gradient-to-br from-blue-50 to-indigo-100 border-blue-400'
-    if (level.stars === 1) return 'bg-gradient-to-br from-green-50 to-emerald-100 border-green-400'
+    if (level.stars === 5) return 'bg-gradient-to-br from-amber-100 to-yellow-200 border-yellow-500 shadow-lg' // Perfect - Gold
+    if (level.stars === 4) return 'bg-gradient-to-br from-yellow-50 to-amber-100 border-yellow-400' // Excellent - Light Gold
+    if (level.stars === 3) return 'bg-gradient-to-br from-blue-50 to-indigo-100 border-blue-400' // Good - Blue
+    if (level.stars === 2) return 'bg-gradient-to-br from-green-50 to-emerald-100 border-green-400' // Above Average - Green
+    if (level.stars === 1) return 'bg-gradient-to-br from-gray-50 to-slate-100 border-slate-400' // Pass - Gray
     return 'bg-white border-kenya-green'
   }
 
@@ -58,7 +60,7 @@ function LevelSelect({ onLevelSelect, onBack }) {
             Select Level
           </h1>
           <p className="text-sm sm:text-base text-gray-600">
-            Complete each level with 60% or higher to unlock the next!
+            Complete each level with 60% or higher to unlock the next • Earn up to 5 stars per level!
           </p>
         </div>
 
@@ -69,9 +71,9 @@ function LevelSelect({ onLevelSelect, onBack }) {
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
                   <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                  <p className="text-2xl font-bold text-yellow-600">{stats.totalStars}/{stats.maxStars}</p>
+                  <p className="text-2xl font-bold text-yellow-600">{stats.levelsWithStars}/{stats.maxLevels}</p>
                 </div>
-                <p className="text-xs text-gray-600">Total Stars</p>
+                <p className="text-xs text-gray-600">Starred Levels</p>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
@@ -89,14 +91,21 @@ function LevelSelect({ onLevelSelect, onBack }) {
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <ChevronRight className="w-5 h-5 text-blue-600" />
-                  <p className="text-2xl font-bold text-blue-600">{stats.levelsUnlocked}</p>
+                  <Target className="w-5 h-5 text-blue-600" />
+                  <p className="text-2xl font-bold text-blue-600">{stats.totalAttempts}</p>
                 </div>
-                <p className="text-xs text-gray-600">Unlocked</p>
+                <p className="text-xs text-gray-600">Total Attempts</p>
               </div>
             </div>
           </div>
         )}
+
+        {/* Star Rating Guide */}
+        <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-300 rounded-lg p-3 mb-6">
+          <p className="text-xs text-center text-gray-700 font-semibold">
+            ⭐ Star Ratings: 5★ (95%+) • 4★ (85%+) • 3★ (75%+) • 2★ (65%+) • 1★ (60%+)
+          </p>
+        </div>
 
         {/* Level Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">

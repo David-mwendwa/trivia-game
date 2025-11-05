@@ -45,15 +45,19 @@ export const getLevelQuestions = (levelId) => {
 }
 
 /**
- * Calculate stars based on accuracy
- * 90-100% = 3 stars
- * 75-89% = 2 stars
- * 60-74% = 1 star
- * <60% = 0 stars (failed)
+ * Calculate stars based on accuracy (max 5 stars per level)
+ * 95-100% = 5 stars (Perfect)
+ * 85-94% = 4 stars (Excellent)
+ * 75-84% = 3 stars (Good)
+ * 65-74% = 2 stars (Above Average)
+ * 60-64% = 1 star (Pass)
+ * <60% = 0 stars (Failed)
  */
 export const calculateStars = (accuracy) => {
-  if (accuracy >= 90) return 3
-  if (accuracy >= 75) return 2
+  if (accuracy >= 95) return 5
+  if (accuracy >= 85) return 4
+  if (accuracy >= 75) return 3
+  if (accuracy >= 65) return 2
   if (accuracy >= MIN_PASS_PERCENTAGE) return 1
   return 0
 }
@@ -208,6 +212,7 @@ export const getTotalStats = () => {
   const levels = generateLevels()
   
   let totalStars = 0
+  let levelsWithStars = 0 // Count of levels that have at least 1 star
   let completedLevels = 0
   let totalAttempts = 0
   let levelsUnlocked = 0
@@ -216,18 +221,19 @@ export const getTotalStats = () => {
     const levelProgress = progress[level.id]
     if (levelProgress) {
       totalStars += levelProgress.stars
+      if (levelProgress.stars > 0) levelsWithStars++ // Has earned at least 1 star
       if (levelProgress.completed) completedLevels++
       totalAttempts += levelProgress.attempts
       if (levelProgress.isUnlocked) levelsUnlocked++
     }
   })
   
-  const maxStars = levels.length * 3
   const completionPercentage = Math.round((completedLevels / levels.length) * 100)
   
   return {
-    totalStars,
-    maxStars,
+    totalStars, // Total stars earned (for internal use)
+    levelsWithStars, // Levels with at least 1 star (display this)
+    maxLevels: levels.length, // Total levels (display out of this)
     completedLevels,
     totalLevels: levels.length,
     levelsUnlocked,

@@ -81,20 +81,27 @@ function StartScreen({ onStart, currentUser, onLogout }) {
                 <Layers className="w-4 h-4 text-purple-600" />
                 Level Mode Progress
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                 <div className="bg-gradient-to-br from-yellow-50 to-amber-100 border-2 border-yellow-400 rounded-md p-3 text-center">
                   <div className="flex items-center justify-center gap-1 mb-1">
                     <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                    <p className="text-lg sm:text-xl font-bold text-yellow-600">{levelStats.totalStars}/{levelStats.maxStars}</p>
+                    <p className="text-lg sm:text-xl font-bold text-yellow-600">{levelStats.levelsWithStars}/{levelStats.maxLevels}</p>
                   </div>
-                  <p className="text-xs text-gray-600 font-semibold">Total Stars</p>
+                  <p className="text-xs text-gray-600 font-semibold">Starred Levels</p>
                 </div>
                 <div className="bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-400 rounded-md p-3 text-center">
                   <div className="flex items-center justify-center gap-1 mb-1">
                     <Trophy className="w-4 h-4 text-purple-600" />
                     <p className="text-lg sm:text-xl font-bold text-purple-600">{levelStats.completedLevels}/{levelStats.totalLevels}</p>
                   </div>
-                  <p className="text-xs text-gray-600 font-semibold">Levels Completed</p>
+                  <p className="text-xs text-gray-600 font-semibold">Completed</p>
+                </div>
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-400 rounded-md p-3 text-center">
+                  <div className="flex items-center justify-center gap-1 mb-1">
+                    <Target className="w-4 h-4 text-blue-600" />
+                    <p className="text-lg sm:text-xl font-bold text-blue-600">{levelStats.totalAttempts}</p>
+                  </div>
+                  <p className="text-xs text-gray-600 font-semibold">Total Attempts</p>
                 </div>
                 <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-400 rounded-md p-3 text-center">
                   <div className="flex items-center justify-center gap-1 mb-1">
