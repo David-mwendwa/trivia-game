@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Trophy, Star, RotateCcw, TrendingUp, Award, Zap } from 'lucide-react'
 import { calculateAccuracy, formatScore, getPerformanceColor } from '../utils/scoringSystem'
 
-function ResultsScreen({ playerName, score, totalQuestions, correctAnswers = 0, difficulty = 'casual', onRestart }) {
+function ResultsScreen({ playerName, score, totalQuestions, correctAnswers = 0, difficulty = 'casual', onRestart, currentUser }) {
   const hasSaved = useRef(false)
   
   // Ensure correct answers never exceeds total questions
@@ -13,9 +13,20 @@ function ResultsScreen({ playerName, score, totalQuestions, correctAnswers = 0, 
   const percentage = Math.min(accuracy.percentage, 100) // Cap at 100%
   
   useEffect(() => {
-    // Prevent duplicate saves (React StrictMode runs effects twice)
+    // Prevent duplicate saves (React StrictMode runs twice)
     if (hasSaved.current) return
     hasSaved.current = true
+    
+    // Get total games played (including this one)
+    let gamesPlayed = 1
+    if (currentUser && currentUser.gamesPlayed !== undefined) {
+      // For authenticated users, use updated count from profile
+      gamesPlayed = currentUser.gamesPlayed
+    } else {
+      // For guest users, count from localStorage
+      const scores = JSON.parse(localStorage.getItem('triviaHighScores') || '[]')
+      gamesPlayed = scores.filter(s => s.name === playerName).length + 1
+    }
     
     // Save high score to localStorage
     const highScores = JSON.parse(localStorage.getItem('triviaHighScores') || '[]')
@@ -27,6 +38,7 @@ function ResultsScreen({ playerName, score, totalQuestions, correctAnswers = 0, 
       correctAnswers: validCorrectAnswers,
       percentage: percentage,
       difficulty: difficulty,
+      gamesPlayed: gamesPlayed,
       date: new Date().toISOString()
     }
     

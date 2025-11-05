@@ -57,6 +57,26 @@ function HighScores() {
     return 'text-red-600'
   }
 
+  const getGamesPlayedBadge = (gamesPlayed) => {
+    if (!gamesPlayed) return null
+    
+    // Color code based on how many attempts it took
+    let badgeColor
+    if (gamesPlayed <= 3) {
+      badgeColor = 'bg-yellow-100 text-yellow-700 border-yellow-300' // Gold - impressive!
+    } else if (gamesPlayed <= 10) {
+      badgeColor = 'bg-gray-100 text-gray-700 border-gray-300' // Silver
+    } else {
+      badgeColor = 'bg-orange-100 text-orange-700 border-orange-300' // Bronze - veteran
+    }
+    
+    return (
+      <span className={`px-2 py-0.5 rounded text-xs font-bold border ${badgeColor}`} title={`Total attempts made: ${gamesPlayed}`}>
+        🎯 #{gamesPlayed}
+      </span>
+    )
+  }
+
   if (highScores.length === 0) {
     return null
   }
@@ -98,6 +118,7 @@ function HighScores() {
                 <div className="flex items-center gap-2 justify-center sm:justify-start flex-wrap">
                   <p className="font-bold text-gray-800 text-base sm:text-lg">{score.name}</p>
                   {score.difficulty && getDifficultyBadge(score.difficulty)}
+                  {score.gamesPlayed && getGamesPlayedBadge(score.gamesPlayed)}
                 </div>
                 <p className="text-xs sm:text-sm text-gray-600">{formatDate(score.date)}</p>
               </div>

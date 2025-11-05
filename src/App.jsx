@@ -169,6 +169,7 @@ function App() {
             totalQuestions={totalQuestions}
             correctAnswers={correctAnswers}
             difficulty={difficulty}
+            currentUser={currentUser}
             onRestart={restartGame}
           />
         )}
