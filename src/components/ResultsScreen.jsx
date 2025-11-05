@@ -43,18 +43,21 @@ function ResultsScreen({
     if (hasSaved.current) return;
     hasSaved.current = true;
 
-    // Update level progress
-    updateLevelProgress(
-      levelId,
-      score,
-      percentage,
-      validCorrectAnswers,
-      totalQuestions
-    );
-
-    // Save score to Supabase (also saves to localStorage as fallback)
-    const saveToDB = async () => {
+    // Save both progress and score
+    const saveGameData = async () => {
       try {
+        // 1. Update level progress (local + cloud)
+        const userId = currentUser?.id || null
+        await updateLevelProgress(
+          levelId,
+          score,
+          percentage,
+          validCorrectAnswers,
+          totalQuestions,
+          userId
+        );
+
+        // 2. Save score to Supabase (also saves to localStorage as fallback)
         const result = await saveScore({
           playerName,
           levelId,
@@ -66,16 +69,16 @@ function ResultsScreen({
         });
         
         if (result.success) {
-          console.log('✅ Score saved to Supabase successfully');
+          console.log('✅ Game data saved successfully');
         } else {
           console.warn('⚠️ Score saved to localStorage only:', result.error);
         }
       } catch (error) {
-        console.error('❌ Error saving score:', error);
+        console.error('❌ Error saving game data:', error);
       }
     };
     
-    saveToDB();
+    saveGameData();
   }, []);
 
   const getPerformanceMessage = () => {

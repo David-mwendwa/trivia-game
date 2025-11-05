@@ -7,6 +7,7 @@ import LoginScreen from './components/LoginScreen'
 import DifficultyScreen from './components/DifficultyScreen'
 import LevelSelect from './components/LevelSelect'
 import { getCurrentUser, logoutUser, updateUserStats } from './utils/supabaseUserManager'
+import { performFullSync } from './utils/levelProgressSync'
 
 // Helper to transform Supabase user data to camelCase
 const transformUserData = (userData) => {
@@ -49,6 +50,10 @@ function App() {
         setCurrentUser(transformedUser)
         setPlayerName(transformedUser.name)
         setGameState('start')
+        
+        // Sync level progress from cloud
+        console.log('🔄 Syncing level progress on app load...')
+        await performFullSync(transformedUser.id)
       } else {
         setGameState('login')
       }
@@ -56,7 +61,7 @@ function App() {
     checkUser()
   }, [])
 
-  const handleLoginSuccess = (mergedUser) => {
+  const handleLoginSuccess = async (mergedUser) => {
     // LoginScreen passes { ...user, ...profile }, transform to camelCase
     console.log('Login success, received user:', mergedUser)
     
@@ -73,6 +78,10 @@ function App() {
     setCurrentUser(transformedUser)
     setPlayerName(transformedUser.name)
     setGameState('start')
+    
+    // Sync level progress from cloud
+    console.log('🔄 Syncing level progress on login...')
+    await performFullSync(transformedUser.id)
   }
 
   const handleLogout = async () => {

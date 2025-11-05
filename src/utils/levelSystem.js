@@ -4,6 +4,7 @@
  */
 
 import questionsData from '../data/questions.json'
+import { saveProgressToCloud } from './levelProgressSync'
 
 // Constants
 export const QUESTIONS_PER_LEVEL = 20
@@ -131,7 +132,7 @@ export const getOrInitProgress = () => {
 /**
  * Update progress after completing a level
  */
-export const updateLevelProgress = (levelId, score, accuracy, correctAnswers, totalQuestions) => {
+export const updateLevelProgress = async (levelId, score, accuracy, correctAnswers, totalQuestions, userId = null) => {
   const progress = getOrInitProgress()
   const levels = generateLevels()
   
@@ -178,7 +179,14 @@ export const updateLevelProgress = (levelId, score, accuracy, correctAnswers, to
     }
   }
   
+  // Save locally
   saveLevelProgress(progress)
+  
+  // Sync to cloud if user is logged in
+  if (userId) {
+    await saveProgressToCloud(userId, levelId, levelProgress)
+  }
+  
   return { progress, passed, stars }
 }
 
