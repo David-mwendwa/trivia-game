@@ -1,10 +1,15 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Trophy, Star, RotateCcw, TrendingUp } from 'lucide-react'
 
 function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
   const percentage = Math.round((score / totalQuestions) * 100)
+  const hasSaved = useRef(false)
   
   useEffect(() => {
+    // Prevent duplicate saves (React StrictMode runs effects twice)
+    if (hasSaved.current) return
+    hasSaved.current = true
+    
     // Save high score to localStorage
     const highScores = JSON.parse(localStorage.getItem('triviaHighScores') || '[]')
     
@@ -28,7 +33,7 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
     
     const top10 = highScores.slice(0, 10)
     localStorage.setItem('triviaHighScores', JSON.stringify(top10))
-  }, [playerName, score, totalQuestions, percentage])
+  }, [])
 
   const getPerformanceMessage = () => {
     if (percentage === 100) return { text: "Perfect Score! 🏆", emoji: "🎉", color: "text-yellow-500" }

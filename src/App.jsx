@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import StartScreen from './components/StartScreen'
 import GameScreen from './components/GameScreen'
 import ResultsScreen from './components/ResultsScreen'
@@ -35,6 +35,7 @@ function App() {
   const [totalQuestions, setTotalQuestions] = useState(0)
   const [difficulty, setDifficulty] = useState('casual')
   const [timeLimit, setTimeLimit] = useState(null)
+  const statsUpdated = useRef(false)
 
   // Check if user is already logged in on mount
   useEffect(() => {
@@ -91,12 +92,17 @@ function App() {
     setGameState('playing')
     setScore(0)
     setTotalQuestions(0)
+    statsUpdated.current = false // Reset for new game
   }
 
   const endGame = async (finalScore, total) => {
     setScore(finalScore)
     setTotalQuestions(total)
     setGameState('results')
+    
+    // Prevent duplicate stats updates (React StrictMode runs effects twice)
+    if (statsUpdated.current) return
+    statsUpdated.current = true
     
     // Update user stats in Supabase
     if (currentUser && currentUser.id) {
@@ -114,6 +120,7 @@ function App() {
     setGameState('difficulty')
     setScore(0)
     setTotalQuestions(0)
+    statsUpdated.current = false // Reset for new game
   }
 
   // Loading screen while checking session
