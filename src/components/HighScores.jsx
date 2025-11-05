@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Trophy, Medal, Award, Trash2, Star, Zap, Target, ChevronDown, ChevronUp } from 'lucide-react'
+import { Trophy, Medal, Award, Star, Zap, Target, ChevronDown, ChevronUp } from 'lucide-react'
 import { formatScore, calculateAccuracy } from '../utils/scoringSystem'
 import { getAllScores, getLocalScores } from '../utils/scoresManager'
 
@@ -57,13 +57,6 @@ function HighScores() {
       return b.percentage - a.percentage
     })
   })
-
-  const clearHighScores = () => {
-    if (window.confirm('Are you sure you want to clear all high scores?')) {
-      localStorage.removeItem('triviaHighScores')
-      setHighScores([])
-    }
-  }
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -131,13 +124,7 @@ function HighScores() {
         <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-kenya-red via-kenya-black to-kenya-green text-center sm:text-left">
           🏆 High Scores
         </h2>
-        <button
-          onClick={clearHighScores}
-          className="p-2 sm:p-3 text-kenya-red hover:bg-kenya-red/10 rounded-lg transition-colors border-2 border-kenya-red/20 touch-manipulation min-h-[44px] min-w-[44px] active:scale-95"
-          title="Clear all high scores"
-        >
-          <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
-        </button>
+        
       </div>
 
       <div className="space-y-4">
