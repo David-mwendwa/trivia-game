@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
-import { Trophy, Medal, Award, Trash2, Star, Zap, Target } from 'lucide-react'
+import { Trophy, Medal, Award, Trash2, Star, Zap, Target, ChevronDown, ChevronUp } from 'lucide-react'
 import { formatScore, calculateAccuracy } from '../utils/scoringSystem'
 
 function HighScores() {
   const [highScores, setHighScores] = useState([])
+  const [expandedLevels, setExpandedLevels] = useState({ 1: true }) // Level 1 open by default
 
   useEffect(() => {
     loadHighScores()
@@ -13,6 +14,29 @@ function HighScores() {
     const scores = JSON.parse(localStorage.getItem('triviaHighScores') || '[]')
     setHighScores(scores)
   }
+
+  const toggleLevel = (levelId) => {
+    setExpandedLevels(prev => ({
+      ...prev,
+      [levelId]: !prev[levelId]
+    }))
+  }
+
+  // Group scores by level
+  const scoresByLevel = highScores.reduce((acc, score) => {
+    const levelId = score.levelId || 'unknown'
+    if (!acc[levelId]) acc[levelId] = []
+    acc[levelId].push(score)
+    return acc
+  }, {})
+
+  // Sort each level's scores
+  Object.keys(scoresByLevel).forEach(levelId => {
+    scoresByLevel[levelId].sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score
+      return b.percentage - a.percentage
+    })
+  })
 
   const clearHighScores = () => {
     if (window.confirm('Are you sure you want to clear all high scores?')) {
@@ -96,8 +120,39 @@ function HighScores() {
         </button>
       </div>
 
-      <div className="space-y-2 sm:space-y-3">
-        {highScores.map((score, index) => (
+      <div className="space-y-4">
+        {[1, 2, 3, 4, 5].map((levelId) => {
+          const levelScores = scoresByLevel[levelId] || []
+          if (levelScores.length === 0) return null
+          const isExpanded = expandedLevels[levelId]
+
+          return (
+            <div key={levelId} className="border-2 border-kenya-green/30 rounded-lg overflow-hidden">
+              {/* Level Header */}
+              <button
+                onClick={() => toggleLevel(levelId)}
+                className="w-full bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 p-3 sm:p-4 flex items-center justify-between hover:from-kenya-green/20 hover:to-kenya-red/20 transition-all touch-manipulation min-h-[44px]"
+              >
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <Trophy className="w-5 h-5 text-kenya-green" />
+                  <h3 className="font-bold text-base sm:text-lg text-kenya-black">
+                    Level {levelId}
+                  </h3>
+                  <span className="text-xs sm:text-sm text-gray-600 font-semibold">
+                    ({levelScores.length} {levelScores.length === 1 ? 'score' : 'scores'})
+                  </span>
+                </div>
+                {isExpanded ? (
+                  <ChevronUp className="w-5 h-5 text-gray-600" />
+                ) : (
+                  <ChevronDown className="w-5 h-5 text-gray-600" />
+                )}
+              </button>
+
+              {/* Level Scores */}
+              {isExpanded && (
+                <div className="p-2 sm:p-3 space-y-2 sm:space-y-3 bg-white">
+                  {levelScores.slice(0, 5).map((score, index) => (
           <div
             key={index}
             className={`flex flex-col sm:flex-row items-center justify-between p-3 sm:p-4 rounded-lg transition-all hover:scale-102 gap-2 sm:gap-0 ${
@@ -150,12 +205,22 @@ function HighScores() {
               </div>
             </div>
           </div>
-        ))}
+                  ))}
+                  {levelScores.length > 5 && (
+                    <p className="text-center text-xs text-gray-500 mt-2">
+                      Showing top 5 of {levelScores.length} scores
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          )
+        })}
       </div>
 
-      {highScores.length >= 10 && (
+      {highScores.length > 0 && (
         <p className="text-center text-xs sm:text-sm text-gray-500 mt-3 sm:mt-4 font-semibold">
-          Showing top 10 scores 🇰🇪
+          📊 Total Scores: {highScores.length} 🇰🇪
         </p>
       )}
     </div>
