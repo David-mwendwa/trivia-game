@@ -38,7 +38,7 @@ function StartScreen({ onStart, currentUser, onLogout }) {
               </div>
             </div>
             <button
-              onClick={() => onLogout()}
+              onClick={onLogout}
               className="flex items-center gap-2 px-4 py-2 bg-kenya-red text-white rounded-lg font-semibold hover:bg-kenya-red/80 transition-all"
               title="Logout"
             >

@@ -5,8 +5,7 @@ import ResultsScreen from './components/ResultsScreen'
 import HighScores from './components/HighScores'
 import LoginScreen from './components/LoginScreen'
 import DifficultyScreen from './components/DifficultyScreen'
-import { getCurrentUser, logoutUser, updateUserStats } from './utils/supabaseUserManager'
-import { supabase } from './lib/supabase'
+import { getCurrentUser, clearCurrentUser, updateUserStats } from './utils/userManager'
 
 function App() {
   const [gameState, setGameState] = useState('login') // 'login', 'start', 'difficulty', 'playing', 'results'
@@ -17,39 +16,14 @@ function App() {
   const [difficulty, setDifficulty] = useState('casual')
   const [timeLimit, setTimeLimit] = useState(null)
 
-  // Check if user is already logged in on mount and listen for auth changes
+  // Check if user is already logged in on mount
   useEffect(() => {
-    // Get initial session
-    const checkUser = async () => {
-      const userData = await getCurrentUser()
-      if (userData) {
-        setCurrentUser(userData.profile || userData.user)
-        setPlayerName(userData.profile?.name || userData.user?.user_metadata?.name)
-        setGameState('start')
-      }
+    const user = getCurrentUser()
+    if (user) {
+      setCurrentUser(user)
+      setPlayerName(user.name)
+      setGameState('start')
     }
-    
-    checkUser()
-    
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        const userData = await getCurrentUser()
-        if (userData) {
-          setCurrentUser(userData.profile || userData.user)
-          setPlayerName(userData.profile?.name || userData.user?.user_metadata?.name)
-          setGameState('start')
-        }
-      } else if (event === 'SIGNED_OUT') {
-        setCurrentUser(null)
-        setPlayerName('')
-        setGameState('login')
-        setScore(0)
-        setTotalQuestions(0)
-      }
-    })
-    
-    return () => subscription.unsubscribe()
   }, [])
 
   const handleLoginSuccess = (user) => {
@@ -58,9 +32,13 @@ function App() {
     setGameState('start')
   }
 
-  const handleLogout = async () => {
-    await logoutUser()
-    // State will be updated by the auth state change listener
+  const handleLogout = () => {
+    clearCurrentUser()
+    setCurrentUser(null)
+    setPlayerName('')
+    setGameState('login')
+    setScore(0)
+    setTotalQuestions(0)
   }
 
   const startGame = (name) => {
@@ -76,18 +54,18 @@ function App() {
     setTotalQuestions(0)
   }
 
-  const endGame = async (finalScore, total) => {
+  const endGame = (finalScore, total) => {
     setScore(finalScore)
     setTotalQuestions(total)
     setGameState('results')
     
-    // Update user stats in Supabase
+    // Update user stats in localStorage
     if (currentUser) {
-      await updateUserStats(currentUser.id, finalScore, total)
+      updateUserStats(finalScore, total)
       // Refresh current user data
-      const updatedUser = await getCurrentUser()
+      const updatedUser = getCurrentUser()
       if (updatedUser) {
-        setCurrentUser(updatedUser.profile || updatedUser.user)
+        setCurrentUser(updatedUser)
       }
     }
   }
