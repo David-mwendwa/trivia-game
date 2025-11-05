@@ -5,6 +5,7 @@ import ResultsScreen from './components/ResultsScreen'
 import HighScores from './components/HighScores'
 import LoginScreen from './components/LoginScreen'
 import DifficultyScreen from './components/DifficultyScreen'
+import LevelSelect from './components/LevelSelect'
 import { getCurrentUser, logoutUser, updateUserStats } from './utils/supabaseUserManager'
 
 // Helper to transform Supabase user data to camelCase
@@ -28,7 +29,7 @@ const transformUserData = (userData) => {
 }
 
 function App() {
-  const [gameState, setGameState] = useState('loading') // 'loading', 'login', 'start', 'difficulty', 'playing', 'results'
+  const [gameState, setGameState] = useState('loading') // 'loading', 'login', 'start', 'levelSelect', 'difficulty', 'playing', 'results'
   const [currentUser, setCurrentUser] = useState(null)
   const [playerName, setPlayerName] = useState('')
   const [score, setScore] = useState(0)
@@ -36,6 +37,7 @@ function App() {
   const [correctAnswers, setCorrectAnswers] = useState(0)
   const [difficulty, setDifficulty] = useState('casual')
   const [timeLimit, setTimeLimit] = useState(null)
+  const [currentLevelId, setCurrentLevelId] = useState(null)
   const statsUpdated = useRef(false)
 
   // Check if user is already logged in on mount
@@ -84,7 +86,17 @@ function App() {
 
   const startGame = (name) => {
     setPlayerName(name)
+    setGameState('levelSelect')
+  }
+
+  const handleLevelSelect = (levelId) => {
+    setCurrentLevelId(levelId)
     setGameState('difficulty')
+  }
+
+  const handleBackToLevelSelect = () => {
+    setCurrentLevelId(null)
+    setGameState('levelSelect')
   }
 
   const handleDifficultySelect = (selectedDifficulty, selectedTimeLimit) => {
@@ -119,10 +131,25 @@ function App() {
   }
 
   const restartGame = () => {
+    // Restart current level
     setGameState('difficulty')
     setScore(0)
     setTotalQuestions(0)
     statsUpdated.current = false // Reset for new game
+  }
+
+  const handleNextLevel = () => {
+    const nextLevelId = currentLevelId + 1
+    setCurrentLevelId(nextLevelId)
+    setGameState('difficulty')
+    setScore(0)
+    setTotalQuestions(0)
+    statsUpdated.current = false
+  }
+
+  const handleBackToStart = () => {
+    setCurrentLevelId(null)
+    setGameState('start')
   }
 
   // Loading screen while checking session
@@ -148,10 +175,17 @@ function App() {
             onLogout={handleLogout}
           />
         )}
+        {gameState === 'levelSelect' && (
+          <LevelSelect
+            onLevelSelect={handleLevelSelect}
+            onBack={handleBackToStart}
+          />
+        )}
         {gameState === 'difficulty' && (
           <DifficultyScreen
             playerName={playerName}
             onSelectDifficulty={handleDifficultySelect}
+            levelId={currentLevelId}
           />
         )}
         {gameState === 'playing' && (
@@ -160,6 +194,7 @@ function App() {
             onGameEnd={endGame}
             difficulty={difficulty}
             timeLimit={timeLimit}
+            levelId={currentLevelId}
           />
         )}
         {gameState === 'results' && (
@@ -171,6 +206,9 @@ function App() {
             difficulty={difficulty}
             currentUser={currentUser}
             onRestart={restartGame}
+            levelId={currentLevelId}
+            onNextLevel={handleNextLevel}
+            onBackToLevels={handleBackToLevelSelect}
           />
         )}
         

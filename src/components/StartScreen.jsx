@@ -1,8 +1,16 @@
-import { useState } from 'react'
-import { Trophy, MapPin, Flag, LogOut, User, Award, Target } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { Trophy, MapPin, Flag, LogOut, User, Award, Star, Layers, Target } from 'lucide-react'
+import { getTotalStats } from '../utils/levelSystem'
 
 function StartScreen({ onStart, currentUser, onLogout }) {
   const [name, setName] = useState('')
+  const [levelStats, setLevelStats] = useState(null)
+
+  useEffect(() => {
+    // Load level progress stats
+    const stats = getTotalStats()
+    setLevelStats(stats)
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -65,6 +73,48 @@ function StartScreen({ onStart, currentUser, onLogout }) {
               <p className="text-xs sm:text-sm text-gray-600 font-semibold">Total Score</p>
             </div>
           </div>
+          
+          {/* Level Progress Stats */}
+          {levelStats && (
+            <div className="mt-4 sm:mt-6">
+              <h3 className="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
+                <Layers className="w-4 h-4 text-purple-600" />
+                Level Mode Progress
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="bg-gradient-to-br from-yellow-50 to-amber-100 border-2 border-yellow-400 rounded-md p-3 text-center">
+                  <div className="flex items-center justify-center gap-1 mb-1">
+                    <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+                    <p className="text-lg sm:text-xl font-bold text-yellow-600">{levelStats.totalStars}/{levelStats.maxStars}</p>
+                  </div>
+                  <p className="text-xs text-gray-600 font-semibold">Total Stars</p>
+                </div>
+                <div className="bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-400 rounded-md p-3 text-center">
+                  <div className="flex items-center justify-center gap-1 mb-1">
+                    <Trophy className="w-4 h-4 text-purple-600" />
+                    <p className="text-lg sm:text-xl font-bold text-purple-600">{levelStats.completedLevels}/{levelStats.totalLevels}</p>
+                  </div>
+                  <p className="text-xs text-gray-600 font-semibold">Levels Completed</p>
+                </div>
+                <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-400 rounded-md p-3 text-center">
+                  <div className="flex items-center justify-center gap-1 mb-1">
+                    <Award className="w-4 h-4 text-green-600" />
+                    <p className="text-lg sm:text-xl font-bold text-green-600">{levelStats.completionPercentage}%</p>
+                  </div>
+                  <p className="text-xs text-gray-600 font-semibold">Progress</p>
+                </div>
+              </div>
+              <div className="mt-2 text-center">
+                <p className="text-xs text-gray-500">
+                  {levelStats.levelsUnlocked === levelStats.totalLevels ? (
+                    <>🎉 All levels unlocked! Amazing!</>
+                  ) : (
+                    <>🔓 {levelStats.levelsUnlocked} of {levelStats.totalLevels} levels unlocked</>
+                  )}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -109,7 +159,7 @@ function StartScreen({ onStart, currentUser, onLogout }) {
       </div>
 
       {currentUser ? (
-        // Logged-in user: Show start button directly
+        // Logged-in user: Show start button
         <div className="max-w-md mx-auto touch-manipulation">
           <div className="mb-4 sm:mb-6 text-center">
             <p className="text-base sm:text-lg text-gray-700">
@@ -117,10 +167,11 @@ function StartScreen({ onStart, currentUser, onLogout }) {
             </p>
           </div>
           <button
-            onClick={handleStartGame}
-            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-6 sm:px-8 rounded-lg font-bold text-lg sm:text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl touch-manipulation min-h-[56px]"
+            onClick={() => onStart(currentUser.name.split(' ')[0])}
+            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-6 sm:px-8 rounded-lg font-bold text-lg sm:text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl touch-manipulation min-h-[56px] flex items-center justify-center gap-2"
           >
-            Start Game 🎮
+            <Trophy className="w-5 h-5" />
+            Play Game 🎮
           </button>
         </div>
       ) : (
@@ -144,9 +195,10 @@ function StartScreen({ onStart, currentUser, onLogout }) {
 
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-6 sm:px-8 rounded-lg font-bold text-lg sm:text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl touch-manipulation min-h-[56px]"
+            className="w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-6 sm:px-8 rounded-lg font-bold text-lg sm:text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl touch-manipulation min-h-[56px] flex items-center justify-center gap-2"
           >
-            Start Game 🎮
+            <Trophy className="w-5 h-5" />
+            Play Game 🎮
           </button>
         </form>
       )}
@@ -154,10 +206,10 @@ function StartScreen({ onStart, currentUser, onLogout }) {
       <div className="mt-6 sm:mt-8 text-center">
         <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green/30 rounded-lg p-3 sm:p-4">
           <p className="text-xs sm:text-sm text-kenya-black font-semibold">
-            🦁 20 Questions About Beautiful Kenya 🌍
+            🦁 100 Questions About Beautiful Kenya 🌍
           </p>
           <p className="text-xs sm:text-sm text-gray-600 mt-1">
-            From Nairobi to Mombasa, from Maasai Mara to Mount Kenya!
+            Progress through 5 levels • 20 questions each • Unlock as you advance!
           </p>
         </div>
       </div>

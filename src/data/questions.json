@@ -138,5 +138,565 @@
     "options": ["Chapati", "Ugali", "Pilau", "Mandazi"],
     "correctAnswer": 1,
     "category": "Culture"
+  },
+  {
+    "id": 21,
+    "question": "Which Kenyan president served from 1978 to 2002?",
+    "options": ["Jomo Kenyatta", "Daniel arap Moi", "Mwai Kibaki", "Uhuru Kenyatta"],
+    "correctAnswer": 1,
+    "category": "History"
+  },
+  {
+    "id": 22,
+    "question": "What is the name of Kenya's largest slum located in Nairobi?",
+    "options": ["Kibera", "Mathare", "Mukuru", "Korogocho"],
+    "correctAnswer": 0,
+    "category": "Geography"
+  },
+  {
+    "id": 23,
+    "question": "Which Kenyan tribe is known for their beadwork and jumping dance?",
+    "options": ["Kikuyu", "Luo", "Maasai", "Kamba"],
+    "correctAnswer": 2,
+    "category": "Culture"
+  },
+  {
+    "id": 24,
+    "question": "What is the official motto of Kenya?",
+    "options": ["Unity and Freedom", "Harambee", "Peace and Justice", "Forward Ever"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  },
+  {
+    "id": 25,
+    "question": "Which national park in Kenya is famous for elephants?",
+    "options": ["Amboseli National Park", "Tsavo National Park", "Nairobi National Park", "Hell's Gate"],
+    "correctAnswer": 0,
+    "category": "Wildlife"
+  },
+  {
+    "id": 26,
+    "question": "What year did Kenya adopt its current constitution?",
+    "options": ["2008", "2010", "2013", "2015"],
+    "correctAnswer": 1,
+    "category": "History"
+  },
+  {
+    "id": 27,
+    "question": "Which Kenyan city hosts the headquarters of the United Nations Environment Programme?",
+    "options": ["Mombasa", "Kisumu", "Nairobi", "Nakuru"],
+    "correctAnswer": 2,
+    "category": "General"
+  },
+  {
+    "id": 28,
+    "question": "What is the name of Kenya's mobile money transfer service?",
+    "options": ["M-Cash", "M-Pesa", "KenyaPay", "SafariCom Money"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 29,
+    "question": "Which river is the longest in Kenya?",
+    "options": ["Tana River", "Athi River", "Ewaso Ng'iro", "Nzoia River"],
+    "correctAnswer": 0,
+    "category": "Geography"
+  },
+  {
+    "id": 30,
+    "question": "Who is considered the father of Kenyan independence?",
+    "options": ["Tom Mboya", "Jomo Kenyatta", "Oginga Odinga", "Ronald Ngala"],
+    "correctAnswer": 1,
+    "category": "History"
+  },
+  {
+    "id": 31,
+    "question": "What is Kenya's main export crop?",
+    "options": ["Coffee", "Tea", "Cotton", "Tobacco"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 32,
+    "question": "Which endangered species is found only in Kenya and Somalia?",
+    "options": ["Mountain Gorilla", "Hirola Antelope", "Black Rhino", "Grevy's Zebra"],
+    "correctAnswer": 1,
+    "category": "Wildlife"
+  },
+  {
+    "id": 33,
+    "question": "What is the name of Nairobi's international airport?",
+    "options": ["Moi International Airport", "Jomo Kenyatta International Airport", "Wilson Airport", "Eldoret International Airport"],
+    "correctAnswer": 1,
+    "category": "General"
+  },
+  {
+    "id": 34,
+    "question": "Which Kenyan runner broke the 2-hour marathon barrier in 2019?",
+    "options": ["Eliud Kipchoge", "Geoffrey Kamworor", "Brigid Kosgei", "David Rudisha"],
+    "correctAnswer": 0,
+    "category": "Sports"
+  },
+  {
+    "id": 35,
+    "question": "What is the traditional Kikuyu circumcision ceremony called?",
+    "options": ["Irua", "Ngoma", "Siaya", "Mugithi"],
+    "correctAnswer": 0,
+    "category": "Culture"
+  },
+  {
+    "id": 36,
+    "question": "Which lake is the largest in Kenya?",
+    "options": ["Lake Nakuru", "Lake Turkana", "Lake Victoria", "Lake Naivasha"],
+    "correctAnswer": 2,
+    "category": "Geography"
+  },
+  {
+    "id": 37,
+    "question": "What is the name of Kenya's intelligence service?",
+    "options": ["KIA", "NIS", "NSIS", "KSS"],
+    "correctAnswer": 1,
+    "category": "General"
+  },
+  {
+    "id": 38,
+    "question": "Which Kenyan woman broke the women's marathon world record in 2019?",
+    "options": ["Mary Keitany", "Brigid Kosgei", "Vivian Cheruiyot", "Edna Kiplagat"],
+    "correctAnswer": 1,
+    "category": "Sports"
+  },
+  {
+    "id": 39,
+    "question": "What is the name of the belt of forests around Mount Kenya?",
+    "options": ["Karura Forest", "Aberdare Forest", "Kakamega Forest", "Mount Kenya Forest"],
+    "correctAnswer": 3,
+    "category": "Geography"
+  },
+  {
+    "id": 40,
+    "question": "Which colonial power ruled Kenya before independence?",
+    "options": ["Germany", "France", "Britain", "Portugal"],
+    "correctAnswer": 2,
+    "category": "History"
+  },
+  {
+    "id": 41,
+    "question": "What is Kenya's second highest mountain?",
+    "options": ["Mount Elgon", "Aberdare Peaks", "Mount Longonot", "Mount Kulal"],
+    "correctAnswer": 0,
+    "category": "Geography"
+  },
+  {
+    "id": 42,
+    "question": "Which Kenyan city is known as the 'Sugar City'?",
+    "options": ["Kisumu", "Mumias", "Eldoret", "Kakamega"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 43,
+    "question": "What is the name of the Swahili New Year celebration?",
+    "options": ["Maulid", "Idd", "Sikukuu", "Muharram"],
+    "correctAnswer": 0,
+    "category": "Culture"
+  },
+  {
+    "id": 44,
+    "question": "Which Kenyan national park is closest to Nairobi?",
+    "options": ["Amboseli", "Tsavo West", "Nairobi National Park", "Aberdare"],
+    "correctAnswer": 2,
+    "category": "Wildlife"
+  },
+  {
+    "id": 45,
+    "question": "Who wrote 'The River Between'?",
+    "options": ["Ngugi wa Thiong'o", "Meja Mwangi", "Grace Ogot", "Margaret Ogola"],
+    "correctAnswer": 0,
+    "category": "Literature"
+  },
+  {
+    "id": 46,
+    "question": "What is the elevation of Mount Kenya's highest peak?",
+    "options": ["4,985 meters", "5,199 meters", "5,895 meters", "6,201 meters"],
+    "correctAnswer": 1,
+    "category": "Geography"
+  },
+  {
+    "id": 47,
+    "question": "Which Kenyan town is famous for its flower industry?",
+    "options": ["Naivasha", "Thika", "Kitale", "Nyeri"],
+    "correctAnswer": 0,
+    "category": "Economy"
+  },
+  {
+    "id": 48,
+    "question": "What is the traditional Luo fish delicacy called?",
+    "options": ["Tilapia", "Omena", "Nile Perch", "Kamongo"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  },
+  {
+    "id": 49,
+    "question": "Which Kenyan athlete won gold in 800m at both 2012 and 2016 Olympics?",
+    "options": ["David Rudisha", "Asbel Kiprop", "Conseslus Kipruto", "Ezekiel Kemboi"],
+    "correctAnswer": 0,
+    "category": "Sports"
+  },
+  {
+    "id": 50,
+    "question": "What is the name of Kenya's largest forest?",
+    "options": ["Arabuko-Sokoke", "Kakamega Forest", "Mau Forest", "Karura Forest"],
+    "correctAnswer": 2,
+    "category": "Geography"
+  },
+  {
+    "id": 51,
+    "question": "Which year did the post-election violence occur in Kenya?",
+    "options": ["2005", "2007-2008", "2010", "2013"],
+    "correctAnswer": 1,
+    "category": "History"
+  },
+  {
+    "id": 52,
+    "question": "What is Kenya's main tourism attraction?",
+    "options": ["Beaches", "Wildlife Safaris", "Mountains", "Cultural Sites"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 53,
+    "question": "Which endangered marine animal is found along Kenya's coast?",
+    "options": ["Green Sea Turtle", "Dugong", "Dolphin", "Whale Shark"],
+    "correctAnswer": 1,
+    "category": "Wildlife"
+  },
+  {
+    "id": 54,
+    "question": "What is the name of Kenya's rugby team?",
+    "options": ["Kenya Lions", "Simba XV", "Kenya Simbas", "Harambee Stars"],
+    "correctAnswer": 2,
+    "category": "Sports"
+  },
+  {
+    "id": 55,
+    "question": "Which Kenyan town is the gateway to the Maasai Mara?",
+    "options": ["Narok", "Kisii", "Kericho", "Bomet"],
+    "correctAnswer": 0,
+    "category": "Geography"
+  },
+  {
+    "id": 56,
+    "question": "What is the traditional Kalenjin running shoe called?",
+    "options": ["Akala", "Kiondo", "Ngasura", "Samburu"],
+    "correctAnswer": 0,
+    "category": "Culture"
+  },
+  {
+    "id": 57,
+    "question": "Which Kenyan politician was assassinated in 1969?",
+    "options": ["Tom Mboya", "Pio Gama Pinto", "J.M. Kariuki", "Robert Ouko"],
+    "correctAnswer": 0,
+    "category": "History"
+  },
+  {
+    "id": 58,
+    "question": "What is Kenya's position on the Equator?",
+    "options": ["North of the Equator", "South of the Equator", "Crosses the Equator", "On the Tropic of Cancer"],
+    "correctAnswer": 2,
+    "category": "Geography"
+  },
+  {
+    "id": 59,
+    "question": "Which Kenyan bank is the oldest?",
+    "options": ["Barclays Bank", "Standard Chartered", "Kenya Commercial Bank", "Equity Bank"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 60,
+    "question": "What is the Big Five in Kenyan wildlife?",
+    "options": ["Lion, Elephant, Buffalo, Rhino, Leopard", "Lion, Cheetah, Giraffe, Zebra, Elephant", "Elephant, Rhino, Hippo, Crocodile, Buffalo", "Lion, Tiger, Bear, Elephant, Rhino"],
+    "correctAnswer": 0,
+    "category": "Wildlife"
+  },
+  {
+    "id": 61,
+    "question": "Which Kenyan author won the Jomo Kenyatta Prize for Literature?",
+    "options": ["Binyavanga Wainaina", "David Maillu", "Marjorie Oludhe Macgoye", "All of the above"],
+    "correctAnswer": 3,
+    "category": "Literature"
+  },
+  {
+    "id": 62,
+    "question": "What is the name of Kenya's hockey team?",
+    "options": ["Kenya Buffaloes", "Kenya Warriors", "Kenya Harlequins", "Kenya Wazalendo"],
+    "correctAnswer": 3,
+    "category": "Sports"
+  },
+  {
+    "id": 63,
+    "question": "Which island off Kenya's coast is a UNESCO World Heritage Site?",
+    "options": ["Lamu", "Manda", "Pate", "Wasini"],
+    "correctAnswer": 0,
+    "category": "Geography"
+  },
+  {
+    "id": 64,
+    "question": "What is the traditional Maasai dwelling called?",
+    "options": ["Hut", "Manyatta", "Boma", "Enkang"],
+    "correctAnswer": 3,
+    "category": "Culture"
+  },
+  {
+    "id": 65,
+    "question": "Which Kenyan president was the third president of Kenya?",
+    "options": ["Mwai Kibaki", "Uhuru Kenyatta", "Daniel arap Moi", "Raila Odinga"],
+    "correctAnswer": 0,
+    "category": "History"
+  },
+  {
+    "id": 66,
+    "question": "What is Kenya's main source of electricity?",
+    "options": ["Coal", "Geothermal and Hydro", "Solar", "Wind"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 67,
+    "question": "Which Kenyan conservationist was killed by poachers in 1989?",
+    "options": ["Richard Leakey", "George Adamson", "Joy Adamson", "Daphne Sheldrick"],
+    "correctAnswer": 1,
+    "category": "Wildlife"
+  },
+  {
+    "id": 68,
+    "question": "What is the name of Kenya's football team?",
+    "options": ["Kenya Stars", "Harambee Stars", "Simba Stars", "Kenya Warriors"],
+    "correctAnswer": 1,
+    "category": "Sports"
+  },
+  {
+    "id": 69,
+    "question": "Which town in Kenya is known for pyrethrum farming?",
+    "options": ["Molo", "Thika", "Kitale", "Narok"],
+    "correctAnswer": 0,
+    "category": "Economy"
+  },
+  {
+    "id": 70,
+    "question": "What is the name of the Kenyan coastal dance?",
+    "options": ["Mugithi", "Chakacha", "Ohangla", "Benga"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  },
+  {
+    "id": 71,
+    "question": "Which Kenyan lake is known for its jade-green color?",
+    "options": ["Lake Turkana", "Lake Baringo", "Lake Magadi", "Lake Bogoria"],
+    "correctAnswer": 0,
+    "category": "Geography"
+  },
+  {
+    "id": 72,
+    "question": "Who was Kenya's first female professor?",
+    "options": ["Wangari Maathai", "Margaret Kenyatta", "Julia Ojiambo", "Charity Ngilu"],
+    "correctAnswer": 0,
+    "category": "History"
+  },
+  {
+    "id": 73,
+    "question": "What is Kenya's official animal conservation organization?",
+    "options": ["KWS", "WWF Kenya", "KFWT", "IFAW"],
+    "correctAnswer": 0,
+    "category": "Wildlife"
+  },
+  {
+    "id": 74,
+    "question": "Which Kenyan athlete is known as the 'Pocket Rocket'?",
+    "options": ["Catherine Ndereba", "Tegla Loroupe", "Mary Keitany", "Vivian Cheruiyot"],
+    "correctAnswer": 1,
+    "category": "Sports"
+  },
+  {
+    "id": 75,
+    "question": "What is the main industrial area in Nairobi called?",
+    "options": ["Westlands", "Industrial Area", "Eastleigh", "Kilimani"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 76,
+    "question": "Which traditional Kenyan instrument is made from a gourd?",
+    "options": ["Kayamba", "Nyatiti", "Orutu", "Litungu"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  },
+  {
+    "id": 77,
+    "question": "What is the name of Kenya's famous fossil site?",
+    "options": ["Olduvai Gorge", "Turkana Basin", "Laetoli", "Olorgesailie"],
+    "correctAnswer": 3,
+    "category": "History"
+  },
+  {
+    "id": 78,
+    "question": "Which Kenyan town is the headquarters of the East African Community?",
+    "options": ["Nairobi", "Mombasa", "Arusha", "Kampala"],
+    "correctAnswer": 2,
+    "category": "General"
+  },
+  {
+    "id": 79,
+    "question": "What is Kenya's rarest antelope species?",
+    "options": ["Bongo", "Suni", "Dik-dik", "Oribi"],
+    "correctAnswer": 0,
+    "category": "Wildlife"
+  },
+  {
+    "id": 80,
+    "question": "Which Kenyan Olympic medalist is nicknamed 'Pocket Dynamite'?",
+    "options": ["Vivian Cheruiyot", "Faith Kipyegon", "Hellen Obiri", "Beatrice Chepkoech"],
+    "correctAnswer": 0,
+    "category": "Sports"
+  },
+  {
+    "id": 81,
+    "question": "What is the name of Kenya's Standard Gauge Railway?",
+    "options": ["Madaraka Express", "Jambo Express", "Kenya Express", "Safari Railway"],
+    "correctAnswer": 0,
+    "category": "Economy"
+  },
+  {
+    "id": 82,
+    "question": "Which Kenyan ethnic group is known for pottery?",
+    "options": ["Kikuyu", "Kamba", "Luhya", "Taita"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  },
+  {
+    "id": 83,
+    "question": "What is the name of Kenya's second largest city?",
+    "options": ["Nakuru", "Eldoret", "Mombasa", "Kisumu"],
+    "correctAnswer": 2,
+    "category": "Geography"
+  },
+  {
+    "id": 84,
+    "question": "Which freedom fighter led the Mau Mau rebellion?",
+    "options": ["Jomo Kenyatta", "Dedan Kimathi", "Bildad Kaggia", "Achieng Oneko"],
+    "correctAnswer": 1,
+    "category": "History"
+  },
+  {
+    "id": 85,
+    "question": "What is Kenya's main horticultural export?",
+    "options": ["Roses", "Vegetables", "Fruits", "Herbs"],
+    "correctAnswer": 0,
+    "category": "Economy"
+  },
+  {
+    "id": 86,
+    "question": "Which park is famous for tree-climbing lions?",
+    "options": ["Lake Nakuru", "Tsavo", "Amboseli", "Aberdare"],
+    "correctAnswer": 0,
+    "category": "Wildlife"
+  },
+  {
+    "id": 87,
+    "question": "Who wrote 'Coming to Birth'?",
+    "options": ["Marjorie Oludhe Macgoye", "Grace Ogot", "Ngugi wa Thiong'o", "Charity Waciuma"],
+    "correctAnswer": 0,
+    "category": "Literature"
+  },
+  {
+    "id": 88,
+    "question": "Which Kenyan marathon runner won Olympic gold in 2016?",
+    "options": ["Eliud Kipchoge", "Geoffrey Kirui", "Wilson Kipsang", "Dennis Kimetto"],
+    "correctAnswer": 0,
+    "category": "Sports"
+  },
+  {
+    "id": 89,
+    "question": "What is the tallest building in Kenya?",
+    "options": ["UAP Tower", "Britam Tower", "Times Tower", "KICC"],
+    "correctAnswer": 1,
+    "category": "General"
+  },
+  {
+    "id": 90,
+    "question": "Which traditional Kenyan basket is woven from sisal?",
+    "options": ["Kiondo", "Mkeka", "Kayamba", "Viondo"],
+    "correctAnswer": 0,
+    "category": "Culture"
+  },
+  {
+    "id": 91,
+    "question": "What is the ancient Swahili trading city on Kenya's coast?",
+    "options": ["Mombasa", "Malindi", "Gede", "Lamu"],
+    "correctAnswer": 2,
+    "category": "History"
+  },
+  {
+    "id": 92,
+    "question": "Which sector contributes most to Kenya's GDP?",
+    "options": ["Agriculture", "Services", "Manufacturing", "Tourism"],
+    "correctAnswer": 1,
+    "category": "Economy"
+  },
+  {
+    "id": 93,
+    "question": "What is Kenya's national bird?",
+    "options": ["Eagle", "Lilac-breasted Roller", "Secretary Bird", "Hornbill"],
+    "correctAnswer": 1,
+    "category": "Wildlife"
+  },
+  {
+    "id": 94,
+    "question": "Which Kenyan athlete won the first Olympic medal for Kenya?",
+    "options": ["Kipchoge Keino", "Wilson Kiprugut", "Naftali Temu", "Amos Biwott"],
+    "correctAnswer": 1,
+    "category": "Sports"
+  },
+  {
+    "id": 95,
+    "question": "What is the name of Kenya's silicon savannah tech hub?",
+    "options": ["iHub", "Nailab", "Konza City", "BRCK"],
+    "correctAnswer": 2,
+    "category": "Economy"
+  },
+  {
+    "id": 96,
+    "question": "Which traditional ceremony marks the transition to adulthood in Kenya?",
+    "options": ["Wedding", "Circumcision", "Naming", "Dowry"],
+    "correctAnswer": 1,
+    "category": "Culture"
+  },
+  {
+    "id": 97,
+    "question": "What is the oldest town in Kenya?",
+    "options": ["Nairobi", "Mombasa", "Lamu", "Malindi"],
+    "correctAnswer": 2,
+    "category": "History"
+  },
+  {
+    "id": 98,
+    "question": "Which Kenyan conservancy is run by the local community?",
+    "options": ["Ol Pejeta", "Lewa", "Namunyak", "Samburu"],
+    "correctAnswer": 2,
+    "category": "Wildlife"
+  },
+  {
+    "id": 99,
+    "question": "Who is Kenya's most decorated athlete?",
+    "options": ["Kipchoge Keino", "Eliud Kipchoge", "David Rudisha", "Catherine Ndereba"],
+    "correctAnswer": 0,
+    "category": "Sports"
+  },
+  {
+    "id": 100,
+    "question": "What is the main ingredient in the traditional drink 'Muratina'?",
+    "options": ["Honey", "Sorghum", "Muratina fruit", "Sugar cane"],
+    "correctAnswer": 2,
+    "category": "Culture"
   }
 ]

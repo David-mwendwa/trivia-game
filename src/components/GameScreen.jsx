@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { Clock, CheckCircle, XCircle, Timer, Zap, TrendingUp } from 'lucide-react';
 import questionsData from '../data/questions.json';
 import { calculateQuestionScore, formatScore } from '../utils/scoringSystem';
+import { getLevelQuestions } from '../utils/levelSystem';
 
-function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = null }) {
+function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = null, levelId }) {
   const [questions] = useState(() => {
-    // Shuffle questions for variety
-    return [...questionsData].sort(() => Math.random() - 0.5);
+    // Load questions for the selected level
+    return getLevelQuestions(levelId);
   });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
