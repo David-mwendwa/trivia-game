@@ -15,6 +15,7 @@ import {
   getPerformanceColor,
 } from '../utils/scoringSystem';
 import { updateLevelProgress, isLevelPassed } from '../utils/levelSystem';
+import { saveScore } from '../utils/scoresManager';
 
 function ResultsScreen({
   playerName,
@@ -51,48 +52,30 @@ function ResultsScreen({
       totalQuestions
     );
 
-    // Get total games played (including this one)
-    let gamesPlayed = 1;
-    if (currentUser && currentUser.gamesPlayed !== undefined) {
-      // For authenticated users, use updated count from profile
-      gamesPlayed = currentUser.gamesPlayed;
-    } else {
-      // For guest users, count from localStorage
-      const scores = JSON.parse(
-        localStorage.getItem('triviaHighScores') || '[]'
-      );
-      gamesPlayed = scores.filter((s) => s.name === playerName).length + 1;
-    }
-
-    // Save high score to localStorage
-    const highScores = JSON.parse(
-      localStorage.getItem('triviaHighScores') || '[]'
-    );
-
-    const newScore = {
-      name: playerName,
-      score: score,
-      totalQuestions: totalQuestions,
-      correctAnswers: validCorrectAnswers,
-      percentage: percentage,
-      difficulty: difficulty,
-      gamesPlayed: gamesPlayed,
-      levelId: levelId,
-      date: new Date().toISOString(),
-    };
-
-    highScores.push(newScore);
-
-    // Sort by score (descending) and keep top 10
-    highScores.sort((a, b) => {
-      if (b.score !== a.score) {
-        return b.score - a.score;
+    // Save score to Supabase (also saves to localStorage as fallback)
+    const saveToDB = async () => {
+      try {
+        const result = await saveScore({
+          playerName,
+          levelId,
+          score,
+          percentage,
+          correctAnswers: validCorrectAnswers,
+          totalQuestions,
+          difficulty
+        });
+        
+        if (result.success) {
+          console.log('✅ Score saved to Supabase successfully');
+        } else {
+          console.warn('⚠️ Score saved to localStorage only:', result.error);
+        }
+      } catch (error) {
+        console.error('❌ Error saving score:', error);
       }
-      return b.percentage - a.percentage;
-    });
-
-    const top10 = highScores.slice(0, 10);
-    localStorage.setItem('triviaHighScores', JSON.stringify(top10));
+    };
+    
+    saveToDB();
   }, []);
 
   const getPerformanceMessage = () => {

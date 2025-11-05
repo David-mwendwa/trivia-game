@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Trophy, Medal, Award, Trash2, Star, Zap, Target, ChevronDown, ChevronUp } from 'lucide-react'
 import { formatScore, calculateAccuracy } from '../utils/scoringSystem'
+import { getAllScores, getLocalScores } from '../utils/scoresManager'
 
 function HighScores() {
   const [highScores, setHighScores] = useState([])
@@ -10,9 +11,28 @@ function HighScores() {
     loadHighScores()
   }, [])
 
-  const loadHighScores = () => {
-    const scores = JSON.parse(localStorage.getItem('triviaHighScores') || '[]')
-    setHighScores(scores)
+  const loadHighScores = async () => {
+    // Try to fetch from Supabase first
+    const { success, data } = await getAllScores(100)
+    
+    if (success && data.length > 0) {
+      // Transform Supabase data to match expected format
+      const transformedScores = data.map(score => ({
+        name: score.player_name,
+        score: score.score,
+        totalQuestions: score.total_questions,
+        correctAnswers: score.correct_answers,
+        percentage: score.percentage,
+        difficulty: score.difficulty,
+        levelId: score.level_id,
+        date: score.created_at
+      }))
+      setHighScores(transformedScores)
+    } else {
+      // Fallback to localStorage if Supabase fails or has no data
+      const localScores = getLocalScores()
+      setHighScores(localScores)
+    }
   }
 
   const toggleLevel = (levelId) => {
