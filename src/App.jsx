@@ -77,8 +77,8 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-kenya-black via-kenya-red to-kenya-green flex items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
+    <div className="min-h-screen bg-gradient-to-br from-kenya-black via-kenya-red to-kenya-green flex items-center justify-center p-3 sm:p-4 md:p-6 lg:p-8 touch-manipulation overscroll-contain">
+      <div className="max-w-4xl w-full mx-auto">
         {gameState === 'login' && <LoginScreen onLoginSuccess={handleLoginSuccess} />}
         {gameState === 'start' && (
           <StartScreen 

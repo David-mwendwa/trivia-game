@@ -87,7 +87,7 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
 
   const getButtonClass = (index) => {
     const baseClass =
-      'w-full p-4 rounded-lg text-left font-semibold transition-all duration-300 transform hover:scale-105';
+      'w-full p-3 sm:p-4 rounded-lg text-left font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95 touch-manipulation min-h-[56px] flex items-center';
 
     if (!showResult) {
       return `${baseClass} bg-white border-2 border-purple-300 hover:border-purple-500 hover:shadow-lg text-gray-800`;
@@ -105,80 +105,80 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
   };
 
   return (
-    <div className='bg-white rounded-lg shadow-2xl p-6 md:p-10'>
+    <div className='bg-white rounded-lg shadow-2xl p-4 sm:p-6 md:p-8 lg:p-10 touch-manipulation select-none'>
       {/* Header */}
-      <div className='mb-6'>
-        <div className='flex justify-between items-center mb-4'>
-          <div>
-            <p className='text-sm text-gray-600'>Player</p>
-            <p className='text-xl font-bold text-kenya-red'>{playerName}</p>
+      <div className='mb-4 sm:mb-6'>
+        <div className='flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-4'>
+          <div className='text-center sm:text-left'>
+            <p className='text-xs sm:text-sm text-gray-600'>Player</p>
+            <p className='text-lg sm:text-xl font-bold text-kenya-red'>{playerName}</p>
           </div>
           
           {/* Timer Display */}
           {timeLimit && (
             <div className='text-center'>
-              <p className='text-sm text-gray-600'>Time Left</p>
-              <div className={`flex items-center gap-2 text-2xl font-bold ${
+              <p className='text-xs sm:text-sm text-gray-600'>Time Left</p>
+              <div className={`flex items-center justify-center gap-2 text-xl sm:text-2xl font-bold ${
                 timeRemaining <= 5 ? 'text-red-600 animate-pulse' : 
                 timeRemaining <= 10 ? 'text-orange-500' : 'text-kenya-green'
               }`}>
-                <Timer className='w-6 h-6' />
+                <Timer className='w-5 h-5 sm:w-6 sm:h-6' />
                 {timeRemaining}s
               </div>
             </div>
           )}
           
-          <div className='text-right'>
-            <p className='text-sm text-gray-600'>Score</p>
-            <p className='text-2xl font-bold text-kenya-green'>
+          <div className='text-center sm:text-right'>
+            <p className='text-xs sm:text-sm text-gray-600'>Score</p>
+            <p className='text-lg sm:text-2xl font-bold text-kenya-green'>
               {score}
             </p>
           </div>
         </div>
 
         {/* Progress Bar */}
-        <div className='w-full bg-gray-200 rounded-full h-4 overflow-hidden shadow-inner'>
+        <div className='w-full bg-gray-200 rounded-full h-3 sm:h-4 overflow-hidden shadow-inner'>
           <div
             className='bg-gradient-to-r from-kenya-red via-kenya-black to-kenya-green h-full transition-all duration-500 ease-out rounded-full'
             style={{ width: `${progress}%` }}
           />
         </div>
-        <p className='text-sm text-gray-600 mt-2 text-center font-semibold'>
+        <p className='text-xs sm:text-sm text-gray-600 mt-2 text-center font-semibold'>
           Question {currentQuestionIndex + 1} of {questions.length}
         </p>
       </div>
 
       {/* Category Badge */}
-      <div className='mb-6'>
-        <span className='inline-block px-4 py-2 bg-gradient-to-r from-kenya-green/20 to-kenya-red/20 text-kenya-black border-2 border-kenya-green rounded-md text-sm font-bold shadow-sm'>
+      <div className='mb-4 sm:mb-6'>
+        <span className='inline-block px-3 py-2 sm:px-4 bg-gradient-to-r from-kenya-green/20 to-kenya-red/20 text-kenya-black border-2 border-kenya-green rounded-md text-xs sm:text-sm font-bold shadow-sm'>
           📚 {currentQuestion.category}
         </span>
       </div>
 
       {/* Question */}
-      <div className='mb-8'>
-        <h2 className='text-2xl md:text-3xl font-bold text-gray-800 leading-relaxed'>
+      <div className='mb-6 sm:mb-8'>
+        <h2 className='text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 leading-relaxed'>
           {currentQuestion.question}
         </h2>
       </div>
 
       {/* Answer Options */}
-      <div className='space-y-3 mb-6'>
+      <div className='space-y-3 sm:space-y-4 mb-6'>
         {currentQuestion.options.map((option, index) => (
           <button
             key={index}
             onClick={() => handleAnswerClick(index)}
             disabled={showResult}
             className={getButtonClass(index)}>
-            <div className='flex items-center justify-between'>
-              <span className='text-lg'>{option}</span>
+            <div className='flex items-center justify-between w-full'>
+              <span className='text-sm sm:text-base lg:text-lg flex-1 pr-2'>{option}</span>
               {showResult && index === currentQuestion.correctAnswer && (
-                <CheckCircle className='w-6 h-6 text-white' />
+                <CheckCircle className='w-5 h-5 sm:w-6 sm:h-6 text-white flex-shrink-0' />
               )}
               {showResult &&
                 index === selectedAnswer &&
                 index !== currentQuestion.correctAnswer && (
-                  <XCircle className='w-6 h-6 text-white' />
+                  <XCircle className='w-5 h-5 sm:w-6 sm:h-6 text-white flex-shrink-0' />
                 )}
             </div>
           </button>
@@ -188,7 +188,7 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
       {/* Result Feedback */}
       {showResult && (
         <div
-          className={`p-4 rounded-lg mb-6 ${
+          className={`p-3 sm:p-4 rounded-lg mb-4 sm:mb-6 ${
             answeredCorrectly
               ? 'bg-green-100 border-2 border-green-500'
               : selectedAnswer === null
@@ -196,7 +196,7 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
               : 'bg-red-100 border-2 border-red-500'
           }`}>
           <p
-            className={`text-center font-bold text-lg ${
+            className={`text-center font-bold text-base sm:text-lg ${
               answeredCorrectly ? 'text-green-700' : 
               selectedAnswer === null ? 'text-orange-700' : 'text-red-700'
             }`}>
@@ -207,7 +207,7 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
               : '❌ Incorrect! Better luck next time!'}
           </p>
           {answeredCorrectly && timeBonus > 0 && (
-            <p className='text-center text-sm text-green-600 mt-2 font-semibold'>
+            <p className='text-center text-xs sm:text-sm text-green-600 mt-2 font-semibold'>
               ⚡ Lightning fast! Earned {timeBonus} bonus point{timeBonus > 1 ? 's' : ''}!
             </p>
           )}
@@ -218,7 +218,7 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
       {showResult && (
         <button
           onClick={handleNextQuestion}
-          className='w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-8 rounded-lg font-bold text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl'>
+          className='w-full bg-gradient-to-r from-kenya-red to-kenya-green text-white py-4 px-6 sm:px-8 rounded-lg font-bold text-lg sm:text-xl hover:from-kenya-green hover:to-kenya-red transform hover:scale-105 active:scale-95 transition-all duration-300 shadow-lg hover:shadow-2xl touch-manipulation min-h-[56px]'>
           {currentQuestionIndex < questions.length - 1
             ? 'Next Question ➡️'
             : 'See Results 🏆'}
