@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Trophy, Medal, Award, Trash2 } from 'lucide-react'
+import { Trophy, Medal, Award, Trash2, Star, Zap, Target } from 'lucide-react'
+import { formatScore, calculateAccuracy } from '../utils/scoringSystem'
 
 function HighScores() {
   const [highScores, setHighScores] = useState([])
@@ -30,6 +31,30 @@ function HighScores() {
     if (index === 1) return <Medal className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
     if (index === 2) return <Award className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
     return <span className="w-5 sm:w-6 text-center font-bold text-gray-500 text-sm sm:text-base">#{index + 1}</span>
+  }
+
+  const getDifficultyBadge = (difficulty) => {
+    const badges = {
+      casual: { label: 'Casual', color: 'bg-blue-100 text-blue-700 border-blue-300' },
+      challenge: { label: 'Challenge', color: 'bg-orange-100 text-orange-700 border-orange-300' },
+      blitz: { label: 'Blitz', color: 'bg-red-100 text-red-700 border-red-300' },
+      // Legacy support for old difficulty names
+      timed: { label: 'Timed', color: 'bg-orange-100 text-orange-700 border-orange-300' },
+      expert: { label: 'Expert', color: 'bg-red-100 text-red-700 border-red-300' },
+    }
+    const badge = badges[difficulty] || badges.casual
+    return (
+      <span className={`px-2 py-0.5 rounded text-xs font-bold border ${badge.color}`}>
+        {badge.label}
+      </span>
+    )
+  }
+
+  const getGradeColor = (grade) => {
+    if (grade.startsWith('A')) return 'text-green-600'
+    if (grade.startsWith('B')) return 'text-blue-600'
+    if (grade.startsWith('C')) return 'text-yellow-600'
+    return 'text-red-600'
   }
 
   if (highScores.length === 0) {
@@ -65,21 +90,43 @@ function HighScores() {
                 : 'bg-gradient-to-r from-kenya-green/5 to-kenya-red/5 border-2 border-kenya-green/30'
             }`}
           >
-            <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 flex-1">
               <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
                 {getMedalIcon(index)}
               </div>
-              <div className="text-center sm:text-left">
-                <p className="font-bold text-gray-800 text-base sm:text-lg">{score.name}</p>
+              <div className="text-center sm:text-left flex-1">
+                <div className="flex items-center gap-2 justify-center sm:justify-start flex-wrap">
+                  <p className="font-bold text-gray-800 text-base sm:text-lg">{score.name}</p>
+                  {score.difficulty && getDifficultyBadge(score.difficulty)}
+                </div>
                 <p className="text-xs sm:text-sm text-gray-600">{formatDate(score.date)}</p>
               </div>
             </div>
             
             <div className="text-center sm:text-right">
-              <p className="font-bold text-lg sm:text-xl text-kenya-green">
-                {score.score}/{score.totalQuestions}
-              </p>
-              <p className="text-xs sm:text-sm font-semibold text-kenya-red">{score.percentage}%</p>
+              <div className="flex items-center gap-2 justify-center sm:justify-end mb-1">
+                <Zap className="w-4 h-4 text-purple-600" />
+                <p className="font-bold text-lg sm:text-xl text-purple-600">
+                  {formatScore(score.score)}
+                </p>
+              </div>
+              <div className="flex items-center gap-2 justify-center sm:justify-end text-xs sm:text-sm">
+                <span className="text-gray-600">Accuracy:</span>
+                <span className="font-semibold text-kenya-green">{score.percentage}%</span>
+                {(() => {
+                  // Use stored correctAnswers if available, otherwise estimate (for old scores)
+                  const correctAnswers = score.correctAnswers ?? Math.min(
+                    Math.floor(score.score / 100),
+                    score.totalQuestions
+                  )
+                  const accuracy = calculateAccuracy(correctAnswers, score.totalQuestions)
+                  return (
+                    <span className={`font-bold ${getGradeColor(accuracy.grade)}`}>
+                      {accuracy.grade}
+                    </span>
+                  )
+                })()}
+              </div>
             </div>
           </div>
         ))}

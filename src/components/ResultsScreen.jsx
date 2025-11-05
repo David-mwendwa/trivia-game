@@ -1,9 +1,16 @@
 import { useEffect, useRef } from 'react'
-import { Trophy, Star, RotateCcw, TrendingUp } from 'lucide-react'
+import { Trophy, Star, RotateCcw, TrendingUp, Award, Zap } from 'lucide-react'
+import { calculateAccuracy, formatScore, getPerformanceColor } from '../utils/scoringSystem'
 
-function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
-  const percentage = Math.round((score / totalQuestions) * 100)
+function ResultsScreen({ playerName, score, totalQuestions, correctAnswers = 0, difficulty = 'casual', onRestart }) {
   const hasSaved = useRef(false)
+  
+  // Ensure correct answers never exceeds total questions
+  const validCorrectAnswers = Math.min(correctAnswers, totalQuestions)
+  
+  // Calculate sophisticated accuracy metrics
+  const accuracy = calculateAccuracy(validCorrectAnswers, totalQuestions)
+  const percentage = Math.min(accuracy.percentage, 100) // Cap at 100%
   
   useEffect(() => {
     // Prevent duplicate saves (React StrictMode runs effects twice)
@@ -17,7 +24,9 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
       name: playerName,
       score: score,
       totalQuestions: totalQuestions,
+      correctAnswers: validCorrectAnswers,
       percentage: percentage,
+      difficulty: difficulty,
       date: new Date().toISOString()
     }
     
@@ -36,14 +45,24 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
   }, [])
 
   const getPerformanceMessage = () => {
-    if (percentage === 100) return { text: "Perfect Score! 🏆", emoji: "🎉", color: "text-yellow-500" }
-    if (percentage >= 80) return { text: "Excellent! 🌟", emoji: "😄", color: "text-kenya-green" }
-    if (percentage >= 60) return { text: "Good Job! 👍", emoji: "😊", color: "text-blue-500" }
-    if (percentage >= 40) return { text: "Not Bad! 💪", emoji: "😐", color: "text-orange-500" }
-    return { text: "Keep Trying! 📚", emoji: "😅", color: "text-kenya-red" }
+    return {
+      text: `${accuracy.rating}! ${accuracy.grade}`,
+      emoji: accuracy.stars >= 5 ? "🎉" : accuracy.stars >= 4 ? "😄" : accuracy.stars >= 3 ? "😊" : accuracy.stars >= 2 ? "😐" : "😅",
+      color: getPerformanceColor(percentage)
+    }
   }
 
   const performance = getPerformanceMessage()
+  
+  // Render stars
+  const renderStars = () => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-5 h-5 sm:w-6 sm:h-6 inline ${i < accuracy.stars ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'}`}
+      />
+    ))
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-2xl p-4 sm:p-6 md:p-8 lg:p-12 transform animate-bounce-subtle touch-manipulation select-none">
@@ -64,14 +83,26 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
           Great game, <span className="font-bold text-kenya-green">{playerName}</span>! 🇰🇪
         </p>
 
+        {/* Stars Rating */}
+        <div className="mb-4 sm:mb-6">
+          {renderStars()}
+        </div>
+
+        {/* Grade Badge */}
+        <div className="inline-block mb-4 sm:mb-6">
+          <div className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-3 rounded-full shadow-lg">
+            <p className="text-2xl sm:text-3xl font-bold">Grade: {accuracy.grade}</p>
+          </div>
+        </div>
+
         {/* Score Display */}
         <div className="bg-gradient-to-r from-kenya-green/10 to-kenya-red/10 border-2 border-kenya-green rounded-lg p-4 sm:p-6 lg:p-8 mb-6 sm:mb-8">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <div className="flex flex-col items-center">
-              <Star className="w-6 h-6 sm:w-8 sm:h-8 text-kenya-red mb-2" />
-              <p className="text-xs sm:text-sm text-gray-600 mb-1">Your Score</p>
-              <p className="text-2xl sm:text-3xl font-bold text-kenya-red">
-                {score} / {totalQuestions}
+              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 mb-2" />
+              <p className="text-xs sm:text-sm text-gray-600 mb-1">Total Score</p>
+              <p className="text-2xl sm:text-3xl font-bold text-purple-600">
+                {formatScore(score)}
               </p>
             </div>
             
@@ -83,8 +114,8 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
             
             <div className="flex flex-col items-center">
               <Trophy className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-600 mb-2" />
-              <p className="text-xs sm:text-sm text-gray-600 mb-1">Correct</p>
-              <p className="text-2xl sm:text-3xl font-bold text-yellow-600">{score}</p>
+              <p className="text-xs sm:text-sm text-gray-600 mb-1">Correct Answers</p>
+              <p className="text-2xl sm:text-3xl font-bold text-yellow-600">{validCorrectAnswers}/{totalQuestions}</p>
             </div>
           </div>
         </div>
@@ -92,9 +123,10 @@ function ResultsScreen({ playerName, score, totalQuestions, onRestart }) {
         {/* Fun Facts */}
         <div className="bg-kenya-green/10 border-2 border-kenya-green rounded-lg p-3 sm:p-4 mb-6 sm:mb-8">
           <p className="text-xs sm:text-sm text-kenya-black font-semibold">
-            💡 <strong>Did you know?</strong> You answered {score} questions correctly about Kenya! 
+            💡 <strong>Performance:</strong> {accuracy.rating} - You answered {validCorrectAnswers} questions correctly about Kenya! 
             {percentage === 100 && " You're a true Kenya Expert! 🎓🇰🇪"}
-            {percentage < 100 && ` Try again to beat your score! 🚀`}
+            {percentage >= 80 && percentage < 100 && " Outstanding performance! 🌟"}
+            {percentage < 80 && ` Keep practicing to improve your score! 🚀`}
           </p>
         </div>
 

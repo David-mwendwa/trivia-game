@@ -33,6 +33,7 @@ function App() {
   const [playerName, setPlayerName] = useState('')
   const [score, setScore] = useState(0)
   const [totalQuestions, setTotalQuestions] = useState(0)
+  const [correctAnswers, setCorrectAnswers] = useState(0)
   const [difficulty, setDifficulty] = useState('casual')
   const [timeLimit, setTimeLimit] = useState(null)
   const statsUpdated = useRef(false)
@@ -95,9 +96,10 @@ function App() {
     statsUpdated.current = false // Reset for new game
   }
 
-  const endGame = async (finalScore, total) => {
+  const endGame = async (finalScore, total, gameStats = {}) => {
     setScore(finalScore)
     setTotalQuestions(total)
+    setCorrectAnswers(gameStats.correctCount || 0)
     setGameState('results')
     
     // Prevent duplicate stats updates (React StrictMode runs effects twice)
@@ -165,6 +167,8 @@ function App() {
             playerName={playerName}
             score={score}
             totalQuestions={totalQuestions}
+            correctAnswers={correctAnswers}
+            difficulty={difficulty}
             onRestart={restartGame}
           />
         )}

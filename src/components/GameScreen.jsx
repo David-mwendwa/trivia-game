@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Clock, CheckCircle, XCircle, Timer } from 'lucide-react';
+import { Clock, CheckCircle, XCircle, Timer, Zap, TrendingUp } from 'lucide-react';
 import questionsData from '../data/questions.json';
+import { calculateQuestionScore, formatScore } from '../utils/scoringSystem';
 
 function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = null }) {
   const [questions] = useState(() => {
@@ -13,7 +14,10 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
   const [showResult, setShowResult] = useState(false);
   const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState(timeLimit);
-  const [timeBonus, setTimeBonus] = useState(0);
+  const [scoreBreakdown, setScoreBreakdown] = useState(null);
+  const [currentStreak, setCurrentStreak] = useState(0);
+  const [longestStreak, setLongestStreak] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
 
   const currentQuestion = questions[currentQuestionIndex];
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
@@ -42,18 +46,9 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
     setSelectedAnswer(null);
     setAnsweredCorrectly(false);
     setShowResult(true);
-    setTimeBonus(0);
+    setCurrentStreak(0); // Break streak on timeout
   };
 
-  const calculateTimeBonus = (timeLeft) => {
-    if (!timeLimit) return 0;
-    // Award bonus points based on time remaining
-    const percentageLeft = (timeLeft / timeLimit) * 100;
-    if (percentageLeft >= 75) return 3; // Very fast
-    if (percentageLeft >= 50) return 2; // Fast
-    if (percentageLeft >= 25) return 1; // Moderate
-    return 0;
-  };
 
   const handleAnswerClick = (answerIndex) => {
     if (showResult) return; // Prevent multiple clicks
@@ -63,12 +58,27 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
     setAnsweredCorrectly(isCorrect);
     setShowResult(true);
 
+    // Calculate score using sophisticated system
+    const scoreResult = calculateQuestionScore({
+      isCorrect,
+      timeRemaining,
+      timeLimit,
+      currentStreak: isCorrect ? currentStreak : 0,
+      difficulty,
+    });
+
+    setScoreBreakdown(scoreResult.breakdown);
+
     if (isCorrect) {
-      const bonus = calculateTimeBonus(timeRemaining);
-      setTimeBonus(bonus);
-      setScore(score + 1 + bonus);
+      const newStreak = currentStreak + 1;
+      setCurrentStreak(newStreak);
+      setLongestStreak(Math.max(longestStreak, newStreak));
+      setCorrectCount(correctCount + 1);
+      setScore(score + scoreResult.points);
     } else {
-      setTimeBonus(0);
+      setCurrentStreak(0);
+      // Apply penalty if any (currently 0 in config)
+      setScore(Math.max(0, score + scoreResult.points));
     }
   };
 
@@ -78,10 +88,14 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
       setSelectedAnswer(null);
       setShowResult(false);
       setAnsweredCorrectly(false);
-      setTimeBonus(0);
+      setScoreBreakdown(null);
     } else {
-      const finalScore = answeredCorrectly ? score : score;
-      onGameEnd(finalScore, questions.length);
+      // Pass additional stats to results screen
+      onGameEnd(score, questions.length, {
+        correctCount,
+        longestStreak,
+        difficulty,
+      });
     }
   };
 
@@ -131,8 +145,14 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
           <div className='text-center sm:text-right'>
             <p className='text-xs sm:text-sm text-gray-600'>Score</p>
             <p className='text-lg sm:text-2xl font-bold text-kenya-green'>
-              {score}
+              {formatScore(score)}
             </p>
+            {currentStreak >= 3 && (
+              <div className='flex items-center justify-center sm:justify-end gap-1 mt-1'>
+                <Zap className='w-4 h-4 text-yellow-500' />
+                <span className='text-xs font-bold text-yellow-600'>{currentStreak}x Streak!</span>
+              </div>
+            )}
           </div>
         </div>
 
@@ -201,15 +221,36 @@ function GameScreen({ playerName, onGameEnd, difficulty = 'casual', timeLimit = 
               selectedAnswer === null ? 'text-orange-700' : 'text-red-700'
             }`}>
             {answeredCorrectly
-              ? `🎉 Correct! ${timeBonus > 0 ? `+${timeBonus} Time Bonus!` : 'Well done!'}`
+              ? `🎉 Correct! +${formatScore(scoreBreakdown?.total || 0)} points`
               : selectedAnswer === null
               ? '⏰ Time\'s up! No answer selected.'
               : '❌ Incorrect! Better luck next time!'}
           </p>
-          {answeredCorrectly && timeBonus > 0 && (
-            <p className='text-center text-xs sm:text-sm text-green-600 mt-2 font-semibold'>
-              ⚡ Lightning fast! Earned {timeBonus} bonus point{timeBonus > 1 ? 's' : ''}!
-            </p>
+          {answeredCorrectly && scoreBreakdown && (
+            <div className='mt-3 space-y-1 text-xs sm:text-sm'>
+              <div className='flex justify-between text-green-700'>
+                <span>Base Points:</span>
+                <span className='font-bold'>+{scoreBreakdown.base}</span>
+              </div>
+              {scoreBreakdown.timeBonus > 0 && (
+                <div className='flex justify-between text-blue-700'>
+                  <span>⚡ Speed Bonus:</span>
+                  <span className='font-bold'>+{scoreBreakdown.timeBonus}</span>
+                </div>
+              )}
+              {scoreBreakdown.streakBonus > 0 && (
+                <div className='flex justify-between text-yellow-700'>
+                  <span>🔥 Streak Bonus ({currentStreak}x):</span>
+                  <span className='font-bold'>+{scoreBreakdown.streakBonus}</span>
+                </div>
+              )}
+              {scoreBreakdown.difficultyMultiplier > 1 && (
+                <div className='flex justify-between text-purple-700'>
+                  <span>💪 Difficulty Multiplier:</span>
+                  <span className='font-bold'>×{scoreBreakdown.difficultyMultiplier}</span>
+                </div>
+              )}
+            </div>
           )}
         </div>
       )}
