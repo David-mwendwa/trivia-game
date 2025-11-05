@@ -166,10 +166,11 @@ function LevelSelect({ onLevelSelect, onBack }) {
           {!showResetConfirm ? (
             <button
               onClick={() => setShowResetConfirm(true)}
-              className="px-6 py-3 bg-kenya-red/10 text-kenya-red rounded-lg font-bold hover:bg-kenya-red/20 transition-colors shadow-md border-2 border-kenya-red/30 touch-manipulation min-h-[44px] active:scale-95"
+              disabled
+              className="px-6 py-3 bg-gray-200 text-gray-400 rounded-lg font-bold cursor-not-allowed shadow-md border-2 border-gray-300 touch-manipulation min-h-[44px] opacity-50"
             >
               <RotateCcw className="w-4 h-4 inline mr-2" />
-              Reset Progress
+              Reset Progress (Disabled)
             </button>
           ) : (
             <div className="flex gap-2">
