@@ -106,11 +106,43 @@ export const getCurrentUser = async () => {
     if (!user) return null;
 
     // Get user profile
-    const { data: profile } = await supabase
+    let { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('*')
       .eq('id', user.id)
       .single();
+
+    // If profile doesn't exist, create it
+    if (profileError || !profile) {
+      console.log('Profile not found, creating new profile...');
+      const { data: newProfile, error: createError } = await supabase
+        .from('profiles')
+        .insert({
+          id: user.id,
+          name: user.user_metadata?.name || user.email,
+          email: user.email,
+          games_played: 0,
+          total_score: 0,
+          highest_score: 0,
+        })
+        .select()
+        .single();
+
+      if (createError) {
+        console.error('Error creating profile:', createError);
+        // Return default profile if creation fails
+        profile = {
+          id: user.id,
+          name: user.user_metadata?.name || user.email,
+          email: user.email,
+          games_played: 0,
+          total_score: 0,
+          highest_score: 0,
+        };
+      } else {
+        profile = newProfile;
+      }
+    }
 
     return { user, profile };
   } catch (error) {

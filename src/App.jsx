@@ -11,14 +11,20 @@ import { getCurrentUser, logoutUser, updateUserStats } from './utils/supabaseUse
 const transformUserData = (userData) => {
   if (!userData) return null
   const { user, profile } = userData
-  return {
+  
+  console.log('Transforming user data:', { user, profile })
+  
+  const transformed = {
     id: user.id,
     email: user.email,
     name: profile?.name || user.user_metadata?.name || user.email,
-    gamesPlayed: profile?.games_played || 0,
-    totalScore: profile?.total_score || 0,
-    highestScore: profile?.highest_score || 0,
+    gamesPlayed: profile?.games_played ?? 0,
+    totalScore: profile?.total_score ?? 0,
+    highestScore: profile?.highest_score ?? 0,
   }
+  
+  console.log('Transformed user:', transformed)
+  return transformed
 }
 
 function App() {
@@ -48,14 +54,18 @@ function App() {
 
   const handleLoginSuccess = (mergedUser) => {
     // LoginScreen passes { ...user, ...profile }, transform to camelCase
+    console.log('Login success, received user:', mergedUser)
+    
     const transformedUser = {
       id: mergedUser.id,
       email: mergedUser.email,
       name: mergedUser.name,
-      gamesPlayed: mergedUser.games_played || 0,
-      totalScore: mergedUser.total_score || 0,
-      highestScore: mergedUser.highest_score || 0,
+      gamesPlayed: mergedUser.games_played ?? 0,
+      totalScore: mergedUser.total_score ?? 0,
+      highestScore: mergedUser.highest_score ?? 0,
     }
+    
+    console.log('Transformed on login:', transformedUser)
     setCurrentUser(transformedUser)
     setPlayerName(transformedUser.name)
     setGameState('start')

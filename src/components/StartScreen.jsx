@@ -51,17 +51,17 @@ function StartScreen({ onStart, currentUser, onLogout }) {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 sm:mt-6">
             <div className="bg-gradient-to-br from-kenya-green/10 to-kenya-green/20 border-2 border-kenya-green rounded-md p-3 sm:p-4 text-center">
               <Target className="w-5 h-5 sm:w-6 sm:h-6 text-kenya-green mx-auto mb-2" />
-              <p className="text-xl sm:text-2xl font-bold text-kenya-green">{currentUser.gamesPlayed}</p>
+              <p className="text-xl sm:text-2xl font-bold text-kenya-green">{currentUser.gamesPlayed ?? 0}</p>
               <p className="text-xs sm:text-sm text-gray-600 font-semibold">Games Played</p>
             </div>
             <div className="bg-gradient-to-br from-kenya-red/10 to-kenya-red/20 border-2 border-kenya-red rounded-md p-3 sm:p-4 text-center">
               <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-kenya-red mx-auto mb-2" />
-              <p className="text-xl sm:text-2xl font-bold text-kenya-red">{currentUser.highestScore}</p>
+              <p className="text-xl sm:text-2xl font-bold text-kenya-red">{currentUser.highestScore ?? 0}</p>
               <p className="text-xs sm:text-sm text-gray-600 font-semibold">Highest Score</p>
             </div>
             <div className="bg-gradient-to-br from-yellow-500/10 to-yellow-500/20 border-2 border-yellow-500 rounded-md p-3 sm:p-4 text-center">
               <Award className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-600 mx-auto mb-2" />
-              <p className="text-xl sm:text-2xl font-bold text-yellow-600">{currentUser.totalScore}</p>
+              <p className="text-xl sm:text-2xl font-bold text-yellow-600">{currentUser.totalScore ?? 0}</p>
               <p className="text-xs sm:text-sm text-gray-600 font-semibold">Total Score</p>
             </div>
           </div>
