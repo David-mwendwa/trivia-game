@@ -1,82 +1,53 @@
 # Advanced Scoring System
 
 ## Overview
-The Kenya Trivia Challenge features a sophisticated multi-factor scoring system that rewards accuracy, speed, and consistency across multiple difficulty levels and game modes. This document details how scores are calculated and how players can maximize their performance.
+The Kenya Trivia Challenge now features a sophisticated multi-factor scoring system that rewards skill, speed, and consistency.
 
 ## Scoring Components
 
 ### 1. **Base Points**
 - **100 points** per correct answer
-- Only awarded for correct answers
-- Provides the foundation for all other score calculations
+- Provides a solid foundation for scoring
 
 ### 2. **Time Bonus (0-50 points)**
-- **Awarded for** answering quickly in Challenge and Blitz modes
-- **Calculation**: `bonus = floor(50 × log₂(1 + timePercentage))`
-- **Minimum 25%** of time remaining required for any bonus
-- **Time Percentage** is calculated based on remaining time vs total time
-- **Maximum Bonus**: 50 points (for answering instantly)
-- **Not available** in Casual mode
+- Awarded for answering quickly
+- Uses logarithmic scaling for smooth progression
+- Minimum 25% of time remaining required for bonus
+- Formula: `bonus = floor(50 × log₂(1 + timePercentage))`
 
 ### 3. **Streak Bonus**
-- **Activation**: After 3 consecutive correct answers
-- **Bonus**: +25 points per question in the streak
-- **Maximum Multiplier**: 2.0x (capped at 8+ consecutive correct answers)
-- **Resets** on:
-  - Incorrect answer
-  - Timeout
-  - Starting a new game
-- **Visual Indicator**: Streak counter shows current multiplier
+- Kicks in after **3 consecutive correct answers**
+- **+25 points per question** in the streak
+- Maximum multiplier: **2.0x**
+- Resets on wrong answer or timeout
 
 ### 4. **Difficulty Multipliers**
-- **Casual Mode (1.0x)**
-  - No time limit
-  - Standard scoring
-  - Perfect for learning and practice
-  
-- **Challenge Mode (1.3x)**
-  - 20 seconds per question
-  - 30% score multiplier
-  - Time bonus available
-  
-- **Blitz Mode (1.5x)**
-  - 10 seconds per question
-  - 50% score multiplier
-  - Maximum time bonus potential
-  - For expert players
+- **Casual:** 1.0x (standard points, no time limit)
+- **Challenge:** 1.3x (30% bonus, 20s per question)
+- **Blitz:** 1.5x (50% bonus, 10s per question)
 
 ### 5. **Perfect Game Bonus**
-- **+500 points** for 100% accuracy
-- Only awarded when all questions in a level are answered correctly
-- Stackable with other bonuses
-- Special visual recognition in results
+- **+500 points** for answering ALL questions correctly
+- Only awarded at 100% accuracy
 
 ## Scoring Examples
 
-### Example 1: Casual Mode (No Time Bonus)
+### Example 1: Casual Mode, Normal Speed
 - Base: 100 points
-- Time bonus: 0 (not applicable)
+- Time bonus: 15 points
 - Streak: 0 (first question)
 - Difficulty: ×1.0
-- **Total: 100 points**
+- **Total: 115 points**
 
-### Example 2: Challenge Mode with Streak
+### Example 2: Blitz Mode, Lightning Fast, 5-Question Streak
 - Base: 100 points
-- Time bonus: 35 points (answered in 5s)
-- Streak: 50 points (5-question streak)
-- Subtotal: 185 points
-- Difficulty: ×1.3
-- **Total: 240.5 points (rounded down to 240)**
-
-### Example 3: Blitz Mode Perfect Game
-- Base: 20 × 100 = 2000 points
-- Average Time Bonus: 40 × 20 = 800 points
-- Streak Bonus: 25 × 15 = 375 points (15 extra from streak)
-- Perfect Game Bonus: 500 points
-- Subtotal: 3675 points
+- Time bonus: 45 points
+- Streak: 75 points (3 extra × 25)
+- Subtotal: 220 points
 - Difficulty: ×1.5
-- **Final Score: 5,512 points**
-- **Rating**: ★★★★★ (100% accuracy)
+- **Total: 330 points**
+
+### Example 3: Perfect Game (20 questions, Blitz Mode)
 - Average per question: ~250 points
 - 20 questions: ~5,000 points
 - Perfect bonus: +500 points
