@@ -1,53 +1,85 @@
-# Supabase Scores Setup Guide
+# Supabase Integration Guide
 
 ## 🎯 Overview
 
-Your trivia game now stores scores in Supabase for:
-- ✅ Persistent storage across devices
-- ✅ Global leaderboards
-- ✅ User-specific score tracking
-- ✅ Cross-device sync for authenticated users
-- ✅ Automatic fallback to localStorage
+Your trivia game now features a robust backend powered by Supabase, enabling:
+
+### Core Features
+- 🌍 Global leaderboards with real-time updates
+- 🔒 Secure authentication (email/password & social logins)
+- 📱 Cross-device synchronization
+- ⚡ Real-time score updates
+- 📊 Advanced analytics and statistics
+- 🔄 Automatic localStorage fallback when offline
 
 ---
 
-## 📋 Setup Steps
+## 🚀 Quick Start
 
-### 1. Create the Database Table
+### 1. Database Setup
 
-1. **Go to your Supabase project** at [supabase.com](https://supabase.com)
-2. Navigate to **SQL Editor** (left sidebar)
-3. **Copy and paste** the contents of `SUPABASE_SETUP.sql`
-4. Click **Run** to execute the SQL
+1. **Create a new project** at [app.supabase.com](https://app.supabase.com)
+2. **Run the setup script**:
+   - Go to **SQL Editor**
+   - Create new query
+   - Paste contents of `SUPABASE_SETUP.sql`
+   - Click **Run**
 
-This will create:
-- ✅ `game_scores` table
-- ✅ Indexes for fast queries
-- ✅ Row Level Security (RLS) policies
-- ✅ Optional leaderboard view
+### 2. Configure Authentication
+
+1. **Enable Auth Providers** in Supabase:
+   - Email/Password
+   - Google (recommended)
+   - GitHub (optional)
+   - Twitter (optional)
+
+2. **Configure Site URL** in Authentication settings:
+   - Add your production domain
+   - Add `http://localhost:3000` for development
 
 ---
 
-### 2. Verify Setup
+## 🔍 Database Schema
 
-After running the SQL, verify the table was created:
+### Main Tables
 
-1. Go to **Table Editor** (left sidebar)
-2. You should see `game_scores` table
-3. Click on it to see the columns
-
-**Expected columns:**
-- `id` (uuid)
-- `user_id` (uuid, nullable)
-- `player_name` (text)
-- `level_id` (integer, 1-5)
-- `score` (integer)
-- `percentage` (integer, 0-100)
+#### `game_scores`
+- `id` (uuid) - Primary key
+- `user_id` (uuid, nullable) - References auth.users
+- `player_name` (text) - Display name
+- `level_id` (integer) - Game level (1-5)
+- `score` (integer) - Total points
+- `percentage` (integer) - Accuracy (0-100)
 - `correct_answers` (integer)
 - `total_questions` (integer)
-- `difficulty` (text)
-- `stars` (integer, 0-5)
-- `created_at` (timestamp)
+- `difficulty` (text) - 'easy', 'medium', 'hard'
+- `stars` (integer, 0-5) - Performance rating
+- `time_spent` (integer) - Seconds taken
+- `device_info` (jsonb) - Browser/device details
+- `created_at` (timestamptz) - Auto-generated
+
+### Views
+
+#### `leaderboard`
+- Top scores with player info
+- Filterable by time period
+- Sortable by score/time
+
+## 🔒 Security Rules
+
+Row Level Security (RLS) is enabled with these policies:
+
+1. **Public Read**
+   - Anyone can view leaderboard
+   - Sensitive user data is protected
+
+2. **User Write**
+   - Users can only modify their own scores
+   - Score validation rules in place
+
+3. **Admin Access**
+   - Full access for administrators
+   - Audit logging enabled
 
 ---
 

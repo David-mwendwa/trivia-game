@@ -1,6 +1,6 @@
 # 🇰🇪 Kenya Trivia Challenge
 
-Jambo! A fun and interactive trivia game built with React and Vite! Test your knowledge about Kenya across multiple categories including Geography, History, Culture, Wildlife, Sports, and Economy.
+Jambo! A fun and interactive trivia game built with React and Vite! Test your knowledge about Kenya across multiple categories including Geography, History, Culture, Wildlife, Sports, and Economy. Now with enhanced mobile experience and advanced scoring system!
 
 ## 🌐 Live Demo
 
@@ -8,15 +8,16 @@ Jambo! A fun and interactive trivia game built with React and Vite! Test your kn
 
 ## ✨ Features
 
-- **20 Kenya-Themed Questions** across multiple categories
+- **20+ Kenya-Themed Questions** across multiple categories
 - **Beautiful Kenya Flag Colors** (Black, Red, Green, White) throughout the UI
 - **Swahili & English Text** for authentic Kenyan experience
-- **High Score Tracking** using localStorage (Alama Bora)
-- **Real-time Score Updates** with progress tracking
-- **Visual Feedback** for correct and incorrect answers
+- **Advanced Scoring System** with time bonuses and streaks
+- **Supabase Integration** for global leaderboards
+- **Mobile-Optimized UI** with perfect touch targets
+- **Visual Feedback** with smooth animations
 - **Responsive Design** that works on all devices
-- **Randomized Questions** for variety in each game
-- **Modern Animations** with smooth transitions
+- **Multiple Difficulty Levels** for all skill levels
+- **Offline Support** with localStorage fallback
 
 ## 🚀 Getting Started
 
@@ -84,7 +85,10 @@ trivia-game/
 - **Vite** - Build tool and dev server
 - **Tailwind CSS** - Utility-first CSS framework
 - **Lucide React** - Beautiful icons
-- **localStorage** - High score persistence
+- **Supabase** - Backend and authentication
+- **React Router** - Client-side routing
+- **Framer Motion** - Smooth animations
+- **localStorage** - Offline score persistence
 
 ## 🔧 Customization
 

@@ -1,53 +1,72 @@
-# Advanced Scoring System
+# 🏆 Advanced Scoring System
 
 ## Overview
-The Kenya Trivia Challenge now features a sophisticated multi-factor scoring system that rewards skill, speed, and consistency.
+The Kenya Trivia Challenge features a sophisticated multi-factor scoring system that rewards:
+- ✅ Knowledge (correct answers)
+- ⚡ Speed (time bonuses)
+- 🔥 Consistency (streaks)
+- 🎯 Precision (difficulty multipliers)
 
-## Scoring Components
+## 🎯 Scoring Components
 
 ### 1. **Base Points**
 - **100 points** per correct answer
-- Provides a solid foundation for scoring
+- No penalties for wrong answers
+- Questions weighted equally for fairness
 
-### 2. **Time Bonus (0-50 points)**
-- Awarded for answering quickly
-- Uses logarithmic scaling for smooth progression
-- Minimum 25% of time remaining required for bonus
-- Formula: `bonus = floor(50 × log₂(1 + timePercentage))`
+### 2. **Time Bonus (0-100 points)**
+- **Max Bonus**: 100 points for instant answers
+- **Decay**: Linear decrease over time
+- **Minimum Time**: 1 second (prevents cheating)
+- **Formula**: 
+  ```
+  timeBonus = max(0, 100 - (timeTaken / maxTime) * 100)
+  ```
+- **Visual Indicator**: Progress bar shows remaining bonus
 
-### 3. **Streak Bonus**
-- Kicks in after **3 consecutive correct answers**
-- **+25 points per question** in the streak
-- Maximum multiplier: **2.0x**
-- Resets on wrong answer or timeout
+### 3. **Streak Multiplier**
+- **Starts at 1.0x** (no bonus)
+- **+0.1x** for each consecutive correct answer
+- **Max 2.5x** at 15+ correct answers
+- **Resets to 1.0x** on wrong answer
+- **Visual Feedback**: Flaming streak counter
 
 ### 4. **Difficulty Multipliers**
-- **Casual:** 1.0x (standard points, no time limit)
-- **Challenge:** 1.3x (30% bonus, 20s per question)
-- **Blitz:** 1.5x (50% bonus, 10s per question)
+| Difficulty | Multiplier | Time Limit | Features |
+|------------|------------|------------|----------|
+| **Casual** | 1.0x | No limit | Learn at your own pace |
+| **Standard** | 1.3x | 30s | Balanced challenge |
+| **Expert** | 1.5x | 15s | For trivia masters |
+| **Kenyan Pro** | 2.0x | 10s | Ultimate challenge |
 
-### 5. **Perfect Game Bonus**
-- **+500 points** for answering ALL questions correctly
-- Only awarded at 100% accuracy
+### 5. **Special Bonuses**
+- **Perfect Game**: +1000 points (100% accuracy)
+- **Speed Demon**: +500 points (average < 5s per question)
+- **Comeback Kid**: 2x points after 3+ wrong answers
+- **Lucky Guess**: Random 100-500 points (5% chance)
 
-## Scoring Examples
+## 🏅 Scoring Examples
 
-### Example 1: Casual Mode, Normal Speed
-- Base: 100 points
-- Time bonus: 15 points
-- Streak: 0 (first question)
-- Difficulty: ×1.0
-- **Total: 115 points**
+### Example 1: Standard Difficulty
+```
+Base: 100 points
+Time Bonus: 75/100 (answered in 7.5s)
+Streak: 1.4x (4 correct in a row)
+Difficulty: 1.3x
+Total: (100 + 75) × 1.4 × 1.3 = 318.5 → 319 points
+```
 
-### Example 2: Blitz Mode, Lightning Fast, 5-Question Streak
-- Base: 100 points
-- Time bonus: 45 points
-- Streak: 75 points (3 extra × 25)
-- Subtotal: 220 points
-- Difficulty: ×1.5
-- **Total: 330 points**
+### Example 2: Expert Mode Streak
+```
+Base: 100 points
+Time Bonus: 90/100 (answered in 3s)
+Streak: 2.0x (10+ correct)
+Difficulty: 1.5x
+Bonus: Speed Demon (+500)
+Total: ((100 + 90) × 2.0 × 1.5) + 500 = 1,070 points
+```
 
-### Example 3: Perfect Game (20 questions, Blitz Mode)
+### Example 3: Perfect Kenyan Pro Game
 - Average per question: ~250 points
 - 20 questions: ~5,000 points
 - Perfect bonus: +500 points
