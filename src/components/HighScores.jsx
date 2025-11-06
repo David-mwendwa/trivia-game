@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Trophy, Medal, Award, Star, Zap, Target, ChevronDown, ChevronUp } from 'lucide-react'
 import { formatScore, calculateAccuracy } from '../utils/scoringSystem'
 import { getAllScores, getLocalScores } from '../utils/scoresManager'
@@ -6,14 +6,15 @@ import { getAllScores, getLocalScores } from '../utils/scoresManager'
 function HighScores() {
   const [highScores, setHighScores] = useState([])
   const [expandedLevels, setExpandedLevels] = useState({ 1: true }) // Level 1 open by default
+  const [visibleScores, setVisibleScores] = useState({}) // Track visible scores per level
 
   useEffect(() => {
     loadHighScores()
   }, [])
 
   const loadHighScores = async () => {
-    // Try to fetch from Supabase first
-    const { success, data } = await getAllScores(100)
+    // Try to fetch from Supabase first - increase limit to 500 to have enough scores
+    const { success, data } = await getAllScores(500)
     
     if (success && data.length > 0) {
       // Transform Supabase data to match expected format
@@ -40,23 +41,37 @@ function HighScores() {
       ...prev,
       [levelId]: !prev[levelId]
     }))
+    
+    // Initialize visible scores count for this level if not set
+    if (!visibleScores[levelId]) {
+      setVisibleScores(prev => ({
+        ...prev,
+        [levelId]: 50 // Show 50 scores by default
+      }))
+    }
   }
 
-  // Group scores by level
-  const scoresByLevel = highScores.reduce((acc, score) => {
-    const levelId = score.levelId || 'unknown'
-    if (!acc[levelId]) acc[levelId] = []
-    acc[levelId].push(score)
-    return acc
-  }, {})
+  // Group scores by level with useMemo for better performance
+  const scoresByLevel = useMemo(() => {
+    return highScores.reduce((acc, score) => {
+      const levelId = score.levelId || 'unknown'
+      if (!acc[levelId]) acc[levelId] = []
+      acc[levelId].push(score)
+      return acc
+    }, {})
+  }, [highScores])
 
-  // Sort each level's scores
-  Object.keys(scoresByLevel).forEach(levelId => {
-    scoresByLevel[levelId].sort((a, b) => {
-      if (b.score !== a.score) return b.score - a.score
-      return b.percentage - a.percentage
+  // Sort each level's scores with useMemo
+  const sortedScoresByLevel = useMemo(() => {
+    const sorted = { ...scoresByLevel }
+    Object.keys(sorted).forEach(levelId => {
+      sorted[levelId] = [...sorted[levelId]].sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score
+        return b.percentage - a.percentage
+      })
     })
-  })
+    return sorted
+  }, [scoresByLevel])
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
@@ -159,7 +174,7 @@ function HighScores() {
               {/* Level Scores */}
               {isExpanded && (
                 <div className="p-2 sm:p-3 space-y-2 sm:space-y-3 bg-white">
-                  {levelScores.slice(0, 5).map((score, index) => (
+                  {levelScores.slice(0, visibleScores[levelId] || 50).map((score, index) => (
           <div
             key={index}
             className={`flex flex-col sm:flex-row items-center justify-between p-3 sm:p-4 rounded-lg transition-all hover:scale-102 gap-2 sm:gap-0 ${
@@ -213,9 +228,21 @@ function HighScores() {
             </div>
           </div>
                   ))}
-                  {levelScores.length > 5 && (
+                  {levelScores.length > (visibleScores[levelId] || 50) ? (
+                    <button
+                      onClick={() => {
+                        setVisibleScores(prev => ({
+                          ...prev,
+                          [levelId]: (prev[levelId] || 50) + 50
+                        }))
+                      }}
+                      className="mt-3 w-full py-2 px-4 bg-kenya-green/10 hover:bg-kenya-green/20 text-kenya-green font-medium rounded-lg transition-colors"
+                    >
+                      Load More ({levelScores.length - (visibleScores[levelId] || 50)} more scores)
+                    </button>
+                  ) : levelScores.length > 50 && (
                     <p className="text-center text-xs text-gray-500 mt-2">
-                      Showing top 5 of {levelScores.length} scores
+                      Showing all {levelScores.length} scores
                     </p>
                   )}
                 </div>

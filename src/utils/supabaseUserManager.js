@@ -7,14 +7,8 @@ import { supabase } from '../lib/supabase';
  */
 export const registerUser = async (userData) => {
   try {
-    console.log('Attempting to register user:', {
+    const { data, error } = await supabase.auth.signUp({
       email: userData.email,
-      name: userData.name,
-    });
-
-    // 1. Register user with Supabase Auth
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: userData.email.trim().toLowerCase(),
       password: userData.password,
       options: {
         data: {
@@ -23,38 +17,21 @@ export const registerUser = async (userData) => {
       },
     });
 
-    console.log('Supabase auth response:', { authData, authError });
+    if (error) throw error;
 
-    if (authError) {
-      console.error('Auth error:', authError);
-      return { success: false, message: authError.message };
-    }
-
-    // 2. Create profile record
-    if (authData.user) {
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: authData.user.id,
-        name: userData.name,
-        email: userData.email,
-        games_played: 0,
-        total_score: 0,
-        highest_score: 0,
-      });
-
-      if (profileError) {
-        console.error('Profile creation error:', profileError);
-        // Auth user was created but profile failed - this is okay, we can handle it later
-      }
-    }
-
+    // The trigger will handle profile creation
     return {
       success: true,
       message:
         'Registration successful! Please check your email to verify your account.',
-      user: authData.user,
+      user: data.user,
     };
   } catch (error) {
-    return { success: false, message: error.message };
+    console.error('Registration error:', error);
+    return {
+      success: false,
+      message: error.message || 'Failed to register user',
+    };
   }
 };
 
