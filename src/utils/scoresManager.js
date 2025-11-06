@@ -95,6 +95,8 @@ export const getAllScores = async (limit = 50) => {
     const { data, error } = await supabase
       .from('game_scores')
       .select('*')
+      .order('score', { ascending: false })
+      .order('percentage', { ascending: false })
       .order('created_at', { ascending: false })
       .limit(limit)
 
