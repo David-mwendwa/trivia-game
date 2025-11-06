@@ -1,6 +1,6 @@
 # 🇰🇪 Kenya Trivia Challenge
 
-Jambo! A fun and interactive trivia game built with React and Vite! Test your knowledge about Kenya across multiple categories including Geography, History, Culture, Wildlife, Sports, and Economy.
+Jambo! A fun and interactive trivia game built with React, Vite, and Supabase! Test your knowledge about Kenya across multiple categories including Geography, History, Culture, Wildlife, Sports, and Economy. Track your progress across devices with user accounts and cloud sync.
 
 ## 🌐 Live Demo
 
@@ -8,15 +8,18 @@ Jambo! A fun and interactive trivia game built with React and Vite! Test your kn
 
 ## ✨ Features
 
-- **20 Kenya-Themed Questions** across multiple categories
-- **Beautiful Kenya Flag Colors** (Black, Red, Green, White) throughout the UI
-- **Swahili & English Text** for authentic Kenyan experience
-- **High Score Tracking** using localStorage (Alama Bora)
-- **Real-time Score Updates** with progress tracking
-- **Visual Feedback** for correct and incorrect answers
-- **Responsive Design** that works on all devices
-- **Randomized Questions** for variety in each game
-- **Modern Animations** with smooth transitions
+- **100+ Kenya-Themed Questions** across multiple categories and difficulty levels
+- **Level Progression System** with 5 distinct levels to master
+- **Multiple Difficulty Modes**:
+  - Casual: No time limit, standard scoring
+  - Challenge: 20s per question, 1.3x score multiplier
+  - Blitz: 10s per question, 1.5x score multiplier
+- **User Authentication** with email/password and social logins
+- **Cross-Device Sync** for game progress and scores
+- **Beautiful UI** with Kenya's flag colors and smooth animations
+- **Responsive Design** optimized for all screen sizes
+- **Detailed Statistics** and performance tracking
+- **Star Rating System** (1-5 stars) based on performance
 
 ## 🚀 Getting Started
 
@@ -41,22 +44,34 @@ npm run dev
 
 ## 🎯 How to Play
 
-1. Enter your name (Jina Lako) on the start screen
-2. Click "Anza Mchezo" (Start Game) to begin
-3. Answer 20 questions about Kenya
-4. Click on your answer choice
-5. Get instant feedback on whether you're correct
-6. Click "Swali Lijalo" (Next) to continue
-7. View your final score with Swahili phrases
-8. Try to beat your high score and become a Kenya Expert! 🇰🇪
+1. **Sign up** or log in to track your progress across devices
+2. **Select a level** - Start with Level 1 and unlock more as you progress
+3. **Choose difficulty**:
+   - Casual: No time pressure, perfect for learning
+   - Challenge: 20s per question for a 1.3x score boost
+   - Blitz: 10s per question for a 1.5x score boost
+4. Answer 20 questions about Kenya per level
+5. Earn stars based on your accuracy (1-5 stars per level)
+6. Complete levels to unlock new challenges
+7. Track your progress in your profile
+8. Compete for the top spots on the global leaderboard!
 
 ## 🏆 Scoring System (Alama)
 
-- Each correct answer earns 1 point
-- Final score is displayed as points and percentage (Usahihi)
-- High scores are automatically saved (Alama Bora)
-- Top 10 scores are displayed on the leaderboard
-- Performance messages in both Swahili and English
+- **Base Score**: Points for correct answers
+- **Time Bonus**: Faster answers earn more points
+- **Streak Bonus**: Consecutive correct answers multiply your score
+- **Difficulty Multipliers**: 
+  - Casual: 1.0x
+  - Challenge: 1.3x
+  - Blitz: 1.5x
+- **Star Ratings**:
+  - ★★★★★: 95-100% accuracy
+  - ★★★★: 85-94% accuracy
+  - ★★★: 75-84% accuracy
+  - ★★: 65-74% accuracy
+  - ★: 60-64% accuracy
+- **Perfect Game Bonus**: 500 bonus points for 100% accuracy
 
 ## 📁 Project Structure
 
@@ -64,27 +79,39 @@ npm run dev
 trivia-game/
 ├── src/
 │   ├── components/
-│   │   ├── StartScreen.jsx      # Welcome screen
-│   │   ├── GameScreen.jsx       # Main game interface
-│   │   ├── ResultsScreen.jsx    # Score results
-│   │   └── HighScores.jsx       # Leaderboard
+│   │   ├── StartScreen.jsx       # Welcome and user authentication
+│   │   ├── LevelSelect.jsx       # Level selection interface
+│   │   ├── DifficultyScreen.jsx  # Difficulty mode selection
+│   │   ├── GameScreen.jsx        # Main game interface
+│   │   ├── ResultsScreen.jsx     # Score and level results
+│   │   └── HighScores.jsx        # Global and personal leaderboards
 │   ├── data/
-│   │   └── questions.json       # Trivia questions database
-│   ├── App.jsx                  # Main app component
-│   ├── main.jsx                 # App entry point
-│   └── index.css                # Global styles
-├── index.html
+│   │   └── questions.json        # Trivia questions database
+│   ├── lib/
+│   │   └── supabase.js          # Supabase client configuration
+│   ├── utils/
+│   │   ├── levelSystem.js       # Level progression logic
+│   │   ├── scoringSystem.js     # Scoring calculations
+│   │   ├── scoresManager.js     # Score submission and retrieval
+│   │   └── supabaseUserManager.js # User authentication
+│   ├── App.jsx                  # Main app component and routing
+│   └── main.jsx                 # App entry point
+├── SUPABASE_SETUP.sql           # Database schema and setup
+├── SUPABASE_SCORES_SETUP.md     # Score tracking documentation
+├── CROSS_DEVICE_SYNC_GUIDE.md   # Sync functionality guide
 ├── package.json
 └── vite.config.js
 ```
 
 ## 🎨 Technologies Used
 
-- **React** - UI library
-- **Vite** - Build tool and dev server
+- **React** - UI library with hooks
+- **Vite** - Next-gen frontend tooling
 - **Tailwind CSS** - Utility-first CSS framework
-- **Lucide React** - Beautiful icons
-- **localStorage** - High score persistence
+- **Supabase** - Backend services (Auth, Database, Storage)
+- **Lucide React** - Beautiful, customizable icons
+- **React Router** - Client-side routing
+- **Local/Cloud Sync** - Hybrid data persistence
 
 ## 🔧 Customization
 

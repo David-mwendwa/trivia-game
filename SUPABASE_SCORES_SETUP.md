@@ -1,53 +1,94 @@
-# Supabase Scores Setup Guide
+# Supabase Integration Guide
 
 ## 🎯 Overview
 
-Your trivia game now stores scores in Supabase for:
-- ✅ Persistent storage across devices
-- ✅ Global leaderboards
-- ✅ User-specific score tracking
-- ✅ Cross-device sync for authenticated users
-- ✅ Automatic fallback to localStorage
+This guide explains how to set up and manage the Supabase backend for the Kenya Trivia Challenge. The application uses Supabase for:
+
+### Core Features
+- 🔐 User Authentication (email/password & social logins)
+- 🗄️ Game data storage (scores, progress, statistics)
+- 🌐 Real-time leaderboards
+- 🔄 Cross-device synchronization
+- 📊 Analytics and user statistics
+- ⚡ Edge Functions (optional)
+
+### Data Flow
+1. User actions trigger score updates
+2. Data is saved to Supabase in real-time
+3. Local storage acts as a fallback when offline
+4. Automatic sync when connection is restored
 
 ---
 
-## 📋 Setup Steps
+## 🛠️ Database Setup
 
-### 1. Create the Database Table
+### 1. Create Database Tables
 
-1. **Go to your Supabase project** at [supabase.com](https://supabase.com)
-2. Navigate to **SQL Editor** (left sidebar)
-3. **Copy and paste** the contents of `SUPABASE_SETUP.sql`
-4. Click **Run** to execute the SQL
+1. **Access your Supabase Dashboard** at [app.supabase.com](https://app.supabase.com)
+2. Navigate to **SQL Editor** in the left sidebar
+3. **Execute the following SQL** to set up the database:
+   - `SUPABASE_FRESH_SETUP.sql` for a new installation
+   - `SUPABASE_ADD_GAMES_PLAYED.sql` to add the games_played column
 
-This will create:
-- ✅ `game_scores` table
-- ✅ Indexes for fast queries
-- ✅ Row Level Security (RLS) policies
-- ✅ Optional leaderboard view
+### 2. Enable Required Extensions
+
+```sql
+-- Enable UUID generation
+create extension if not exists "uuid-ossp";
+
+-- Enable realtime functionality
+create extension if not exists "pg_cron";
+create extension if not exists "pg_net";
+```
+
+### 3. Configure Row Level Security (RLS)
+
+RLS policies are included in the setup scripts. Verify they're enabled:
+
+```sql
+-- Enable RLS on all tables
+alter table public.game_scores enable row level security;
+alter table public.user_profiles enable row level security;
+```
 
 ---
 
-### 2. Verify Setup
+## 🗃️ Database Schema
 
-After running the SQL, verify the table was created:
+### 1. `game_scores` Table
 
-1. Go to **Table Editor** (left sidebar)
-2. You should see `game_scores` table
-3. Click on it to see the columns
+Stores all game session results with the following columns:
 
-**Expected columns:**
-- `id` (uuid)
-- `user_id` (uuid, nullable)
-- `player_name` (text)
-- `level_id` (integer, 1-5)
-- `score` (integer)
-- `percentage` (integer, 0-100)
-- `correct_answers` (integer)
-- `total_questions` (integer)
-- `difficulty` (text)
-- `stars` (integer, 0-5)
-- `created_at` (timestamp)
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | uuid | Primary key (auto-generated) |
+| `user_id` | uuid (nullable) | References auth.users |
+| `player_name` | text | Display name |
+| `level_id` | integer | Game level (1-5) |
+| `score` | integer | Total score |
+| `percentage` | integer | Accuracy (0-100) |
+| `correct_answers` | integer | Number of correct answers |
+| `total_questions` | integer | Total questions in the game |
+| `difficulty` | text | 'casual', 'challenge', or 'blitz' |
+| `stars` | integer | Star rating (1-5) |
+| `time_taken` | integer | Total time taken in seconds |
+| `created_at` | timestamp | Auto-generated timestamp |
+
+### 2. `user_profiles` Table
+
+Extends the default auth.users table with game-specific user data:
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `id` | uuid | References auth.users |
+| `username` | text | Unique username |
+| `full_name` | text | User's full name |
+| `avatar_url` | text | Profile picture URL |
+| `games_played` | integer | Total games played |
+| `total_score` | bigint | Lifetime score |
+| `highest_score` | integer | Best single-game score |
+| `created_at` | timestamp | Account creation date |
+| `updated_at` | timestamp | Last profile update |
 
 ---
 
